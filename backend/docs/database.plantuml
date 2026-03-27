@@ -1,6 +1,6 @@
 @startuml
 left to right direction
-title Di Boa Club - Banco de dados
+title Marca Modelo - Banco de dados
 
 
 legend top left
@@ -15,7 +15,7 @@ legend top left
     - **updated_at**: Gerenciamento automatico (tabela atualizada em)
     - **UUIDs**: Geração aleatória de Az09 (40) characters
 
-    **VERSÃO**: 16/03/2025
+    **VERSÃO**: 16/03/2026
 endlegend
 
 

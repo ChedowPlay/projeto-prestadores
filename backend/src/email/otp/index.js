@@ -56,7 +56,7 @@ const render = async (code, type) => {
         // logo: formatPublicLink("static/img/logo.png"), 
         /*
         <div class="footer-logo" style="text-align: center;">
-            <img src="<%= logo %>" alt="Logo Di Boa Club" width="60" height="66">
+            <img src="<%= logo %>" alt="Logo Marca Modelo" width="60" height="66">
         </div>
         */
         metodo: "",

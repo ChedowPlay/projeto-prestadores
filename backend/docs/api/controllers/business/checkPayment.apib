@@ -20,7 +20,7 @@ Necesário ter o token do usuário no header **OU** o external_reference na quer
 ### **Exemplo usando fetch**
 ```javascript
 const URL = "https://dev-diboaclub.onrender.com";
-const PARAMS = "?collection_status=approved&payment_id=1333327951&status=approved&external_reference=8b5e861c-ce09-44a5-b570-bf69c272af4e&preference_id=1036561310-4f03f31b-6f1e-428b-b488-b3701a8176af&date_approved=2025-03-16T23:44:03.870-04:00";
+const PARAMS = "?collection_status=approved&payment_id=1333327951&status=approved&external_reference=8b5e861c-ce09-44a5-b570-bf69c272af4e&preference_id=1036561310-4f03f31b-6f1e-428b-b488-b3701a8176af&date_approved=2026-03-16T23:44:03.870-04:00";
 
 const externalReference = '5c488ae9-9f94-437c-86be-76b45dccc008';
 const token = 'JWT.EXAMPLE.TOKEN';
@@ -56,7 +56,7 @@ fetch(URL, {
     + collection_status: `approved` (string, optional) - Status da collection. Exemplos: `approved`, `rejected`.
     + external_reference: `8b5e861c-ce09-44a5-b570-bf69c272af4e` (string, **required**) - Referência externa do usuário (user_id) associada ao pagamento. Principal método de validação.
     + preference_id: `1036561310-4f03f31b-6f1e-428b-b488-b3701a8176af` (string, optional) - ID da preferência gerada pelo MercadoPago.
-    + date_approved: `2025-03-16T23:44:03.870-04:00` (string, optional) - Data e hora em que o pagamento foi aprovado.
+    + date_approved: `2026-03-16T23:44:03.870-04:00` (string, optional) - Data e hora em que o pagamento foi aprovado.
     + payment_id: `1333327951` (string, optional) - ID do pagamento no MercadoPago. Não utilizado para validação específica.
 
 + Request Via token

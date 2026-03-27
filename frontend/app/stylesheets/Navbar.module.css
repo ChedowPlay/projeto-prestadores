@@ -66,7 +66,7 @@
 .nav a {
   text-decoration: none;
   color: #0f172a;
-  font-size: 0.98rem;
+  font-size: 0.92rem;
   font-weight: 600;
   transition: color 0.25s ease, transform 0.25s ease;
 }
@@ -107,7 +107,7 @@
   box-shadow: 0 10px 24px rgba(37, 99, 235, 0.18);
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1280px) {
   .navbar {
     padding: 0.85rem 0.85rem 0;
   }
