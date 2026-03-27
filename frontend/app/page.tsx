@@ -59,7 +59,6 @@ export default function Home() {
   const [filteredCards, setFilteredCards] = useState<Card[]>([]);
   const [priceFilter, setPriceFilter] = useState({ min: 10, max: 1000 });
   const [order, setOrder] = useState<"asc" | "desc">("desc");
-  const [results, setResults] = useState<any[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [services, setServices] = useState<{ service_id: string; label: string; value: number }[]>([]);
   const API_URL = process.env.API_URL;
