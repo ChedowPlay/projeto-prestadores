@@ -1,0 +1,227 @@
+@startuml
+left to right direction
+title Di Boa Club - Banco de dados
+
+
+legend top left
+    **LEGENDA**
+    0 ou N --o{
+    0 ou 1--o|
+    1 ou N --|{
+    Apenas 1 --||
+    
+    **NOTAS**
+    - **created_at**: Gerenciamento automatico (tabela criada em)
+    - **updated_at**: Gerenciamento automatico (tabela atualizada em)
+    - **UUIDs**: Geração aleatória de Az09 (40) characters
+
+    **VERSÃO**: 16/03/2025
+endlegend
+
+
+ entity "users" {
+    <<Conta Usuário>>
+    <<Contratante ou Prestador>>
+    --
+    * user_id: UUID [PK] (40)
+
+    + name: varchar(128) notnull
+    + phone: varchar(15) [UNIQUE] notnull
+    + password: varchar(125) HASH(12) notnull
+
+    + email: varchar(328) [UNIQUE] notnull
+    + is_email_checked: boolean default(false)
+
+    + whatsapp: varchar(15)
+    + picture_url: varchar(328) default(`api.dicebear.com/9.x/initials/png?seed=${user.name}`)
+    + picture_path: varchar(512) default(null)
+
+    + cep: varchar(8)
+    + city: varchar(64)
+    + state: varchar(64)
+    + street: varchar(64)
+    + number: varchar(8)
+    + latitude: varchar(8)
+    + longitude: varchar(8)
+    + allow_see_address: boolean default(true)
+
+    + email_checked_at: DateTime default(null)
+
+    + accept_privacy_Policy: boolean default(false)
+    + accept_terms_use: boolean default(false)
+
+    + deleted_at: DateTime default(null)
+    + created_at: DateTime
+    + updated_at: DateTime
+}
+
+
+entity "providers" {
+    <<Anexo Prestador>>
+    --
+    * provider_id: UUID [PK] (40)
+    + user_id: UUID [FK] notnull
+
+    + bio: varchar(256)
+
+    + mp_service_id: varchar(40) [UNIQUE] notnull
+    + paid_at: DateTime default(null)
+    + payment_at: DateTime default(null)
+
+    + deleted_at: DateTime default(null)
+    + banned_at: DateTime default(null)
+    + created_at: DateTime
+    + updated_at: DateTime
+}
+
+
+entity "tokens" {
+    <<Tokens JWT para Usuários>>
+    <<7d para users>>
+    --
+    * token_id: UUID [PK] (40)
+    + user_id: UUID [FK] notnull
+
+    + code: varchar(256)
+    + access: varchar(128)
+
+    + expires_at: DateTime
+    + created_at: DateTime
+    + updated_at: DateTime
+}
+
+
+entity "otps" {
+    <<Código de verificação - 10m>>
+    <<attempts limite - 3>>
+    <<otp example: Aa09>>
+    --
+    * otp_id: UUID [PK] (40)
+    + user_id: UUID [FK] notnull
+
+    + code: varchar(6)
+    + attempts: int()
+
+    + expires_at: DateTime notnull
+    + created_at: DateTime
+    + updated_at: DateTime
+}
+
+
+entity "files" {
+    <<identifier gerenciado por multer>>
+    <<máx videos - 10>>
+    <<máx fotos - 10>>
+    <<RNs alteram o máx de arquivos>>
+    --
+    * file_id: UUID [PK] (40)
+    + provider_id: UUID [FK] notnull
+
+    + type: enum(photo, video) notnull
+    + path: varchar(512) default(null)
+    + url: varchar(328) notnull
+
+    + created_at: DateTime
+    + updated_at: DateTime
+}
+
+
+entity "works" {
+    <<Tabela de serviços (trabalhos)>>
+    --
+    * work_id: UUID [PK] (40)
+    + provider_id: UUID [FK] notnull
+    + service_id: UUID [FK] notnull
+
+    + description: varchar(512)
+    + price: double default(0) notnull
+
+    + created_at: DateTime
+    + updated_at: DateTime
+}
+
+
+entity "services" {
+    <<Tabela de tipos de serviços>>
+    --
+    * service_id: UUID [PK] (40)
+    + category_id: UUID [FK] notnull
+
+    + title: varchar(128) notnull
+
+    + created_at: DateTime
+    + updated_at: DateTime
+}
+
+entity "categories" {
+    <<Tabela de tipos de serviços>>
+    --
+    * category_id: UUID [PK] (40)
+
+    + title: varchar(128) notnull
+
+    + created_at: DateTime
+    + updated_at: DateTime
+}
+
+
+entity "complaints" {
+    <<Reclamações>>
+    <<user_id = acusador>>
+    <<provider_id = acusado>>
+    <<limite - 3 para ban>>
+    --
+    * complaint_id: UUID [PK] (40)
+    + provider_id: UUID [FK] notnull
+    + user_id: UUID [FK]
+    + description: varchar(512) notnull
+
+    + created_at: DateTime
+    + updated_at: DateTime
+}
+
+
+entity "favorites" {
+    <<Tabela de Favoritos>>
+    --
+    * favorite_id: UUID [PK] (40)
+    + user_id: UUID [FK] not null
+    + favorited_id: UUID [FK] not null
+
+    + created_at: DateTime
+    + updated_at: DateTime
+}
+
+
+entity "plans" {
+    <<Tabela de Planos e RNs>>
+    <<image e video são valores máx>>
+    --
+    * plan_id: UUID [PK] (40)
+
+    + mp_plan_id: varchar(40) [UNIQUE] notnull
+    + name: varchar(125) [UNIQUE] notnull
+    + price: double default(0) notnull
+    + image: int()
+    + video: int()
+    + service: int()
+
+    + created_at: DateTime
+    + updated_at: DateTime
+}
+
+"users" ||--o{ "otps"
+"users" ||--o{ "tokens"
+"users" ||--o| "providers"
+"users" ||--o{ "favorites"
+"plans" ||--o{ "providers"
+"users" ||--o{ "complaints"
+"works" }o--|| "services"
+"providers" ||--o{ "files"
+"providers" ||--|{ "works"
+"providers" ||--o{ "favorites"
+"providers" ||--o{ "complaints"
+"services" }o--|| "categories"
+
+
+@enduml

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Criar Conta</title>
+
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- SDK do Facebook (para seu fluxo) -->
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <script>
+        // Inicializa o SDK do Facebook
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '<ID-FB>', // substitua pelo seu App ID
+                xfbml: true,
+                version: 'v22.0'
+            });
+        };
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+
+        .google-btn,
+        .facebook-btn,
+        .signup-btn {
+            border: none;
+        }
+
+        .google-btn {
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .facebook-btn {
+            background-color: #1877f2;
+            color: white;
+        }
+
+        .signup-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Criar Conta</h2>
+
+    <!-- Formulário de Cadastro via Credenciais -->
+    <form id="signupForm">
+        <!-- Campos de nome, email, senha e telefone (omiti scripts de preenchimento automático para foco no Google) -->
+        <div class="form-group">
+            <label for="name">Nome</label>
+            <input type="text" id="name" required />
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" required />
+        </div>
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input type="password" id="password" value="Teste@129" required />
+            <button type="button" id="togglePassword">Ver Senha</button>
+        </div>
+        <div class="form-group">
+            <label for="phone">Telefone</label>
+            <input type="tel" id="phone" required />
+        </div>
+        <button type="submit" class="signup-btn">Criar Conta</button>
+    </form>
+
+    <!-- Botão customizado para Google Sign-In -->
+    <div id="googleSignInButton"></div>
+
+    <!-- Botão para Login com Facebook -->
+    <button onclick="handleFacebookSignIn()" class="facebook-btn">
+        Continuar com Facebook
+    </button>
+
+    <script>
+        const API_URL = 'http://192.168.100.106:3001';
+
+        // Fluxo do cadastro via credenciais (não modificado)
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const response = await fetch(`${API_URL}/auth/signup`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: document.getElementById('name').value,
+                        email: document.getElementById('email').value,
+                        password: document.getElementById('password').value,
+                        phone: document.getElementById('phone').value,
+                        address: {
+                            cep: "12345678",
+                            city: "Cidade Exemplo",
+                            state: "AA",
+                            street: "Rua Exemplo",
+                            number: "123",
+                            latitude: "123456789123",
+                            longitude: "123456789123"
+                        },
+                        provider: {
+                            bio: "Descrição do prestador",
+                            about: "Mais informações sobre o prestador",
+                        },
+                        accessProvider: 'credentials',
+                        accept_privacy_Policy: true,
+                        accept_terms_use: true
+                    })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    alert('Conta criada com sucesso!');
+                } else {
+                    alert(data.error || 'Erro ao criar conta');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro ao criar conta');
+            }
+        });
+
+        // Toggle de senha
+        document.getElementById("togglePassword").addEventListener("click", function () {
+            const passwordInput = document.getElementById("password");
+            passwordInput.type = (passwordInput.type === "password") ? "text" : "password";
+        });
+
+        // Google Sign-In: callback ao receber o token
+        function handleCredentialResponse(response) {
+            console.log("Token do Google:", response.credential);
+            fetch(`${API_URL}/auth/signup`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    accessProvider: 'google',
+                    accessToken: response.credential
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Conta criada com sucesso!');
+                    } else {
+                        alert(data.error || 'Erro ao criar conta');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao criar conta');
+                });
+        }
+
+        // Inicializa o Google Identity Services e renderiza o botão customizado
+        window.onload = function () {
+            google.accounts.id.initialize({
+                client_id: "<CLIENT_ID_GOOGLE>",
+                callback: handleCredentialResponse
+            });
+            google.accounts.id.renderButton(
+                document.getElementById("googleSignInButton"),
+                { theme: "outline", size: "large" }
+            );
+            // opcional: google.accounts.id.prompt();
+        };
+
+        // Facebook Sign-In usando FB.login
+        function handleFacebookSignIn() {
+            FB.login(function (response) {
+                if (response.authResponse) {
+                    const accessToken = response.authResponse.accessToken;
+                    fetch(`${API_URL}/auth/signup`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            accessProvider: 'facebook',
+                            accessToken
+                        })
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Conta criada com sucesso!');
+                            } else {
+                                alert(data.error || 'Erro ao criar conta');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Erro:', error);
+                            alert('Erro ao criar conta');
+                        });
+                } else {
+                    alert('Login com Facebook não autorizado ou cancelado.');
+                }
+            }, { scope: 'public_profile,email' });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+## Criar Work [/api/provider/work]
+
+### Criar Work [POST]
+
+Cria um novo trabalho para o prestador logado.
+
+::: note
+Limite de acesso: Máxima de 10 tentativas, bloqueio de 120 segundos.
+:::
+
+::: note
+Protegido pelo middleware `isAuth`.
+:::
+
+### **Exemplo usando fetch**
+```javascript
+// Script para testar a API de trabalhos (works)
+
+// Configuração base
+[...]
+
+// Headers padrão para todas as requisições
+[...]
+
+// 2. Criar um novo trabalho
+async function createWork(workData) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/provider/work`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(workData)
+    });
+    const data = await response.json();
+    console.log('Trabalho criado:', data);
+    return data;
+  } catch (error) {
+    console.error('Erro ao criar trabalho:', error);
+  }
+}
+
+// Criar um novo trabalho
+createWork({
+   description: "Desenvolvimento de site responsivo com React",
+   price: 1800.20,
+   service_id: "uuid-serviço" // Substitua pelo UUID real de um serviço
+});
+```
+
++ Request Criar
+    + Headers
+
+            Authorization: Bearer {token}
+            Content-Type: application/json
+
+    + Body
+
+            {
+                "description": "Desenvolvimento de site responsivo com React",
+                "price": 1800.10,
+                "service_id": "uuid-serviço"
+            }
+
++ Response 201 (application/json)
+    + Body
+
+            {
+                "success": true,
+                "message": "Trabalho criado com sucesso.",
+                "work": {
+                    "work_id": "3893ed04-815d-450c-b7a2-9d8e18142e06",
+                    "description": "Desenvolvimento de site responsivo com React",
+                    "price": 1800.10,
+                    "service_id": "595aa724-a3cc-4642-8a2e-ab16e903f000"
+                }
+            }
+
++ Response 400 (application/json)
+    + Body
+
+        { "success": false, "error": "Limite de trabalhos atingido para esse plano." }
+        { "success": false, "error": "Usuário não é um prestador." }
+        {
+        "success": false,
+        "issues": {
+            "code": "invalid_type",
+            "expected": "number",
+            "received": "nan",
+            "path": [
+            "price",
+            "max"
+            ],
+            "message": "Expected number, received nan",
+        },
+        "error": "Dados inválidos.",
+        }
+
++ Response 429 (application/json)
+    + body
+
+            { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + Body
+
+            { "success": false, "error": "Erro inesperado." }
+            { "success": false, "error": "Erro ao criar trabalho." }

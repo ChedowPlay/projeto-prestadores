@@ -1,0 +1,118 @@
+## Atualizar Trabalho [/api/provider/work/{work_id}]
+
+### Atualizar trabalho [PUT]
+
+Atualiza os detalhes de um trabalho.
+
+::: note
+Limite de acesso: Máxima de 10 tentativas, bloqueio de 120 segundos.
+:::
+
+::: note
+Protegido pelo middleware `isAuth`.
+:::
+
+### **Exemplo usando fetch**
+```javascript
+// Script para testar a API de trabalhos (works)
+
+// Configuração base
+[...]
+
+// 3. Atualizar um trabalho existente
+async function updateWork(workId, updateData) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/provider/work/${workId}`, {
+      method: 'PUT',
+      headers,
+      body: JSON.stringify(updateData)
+    });
+    const data = await response.json();
+    console.log('Trabalho atualizado:', data);
+    return data;
+  } catch (error) {
+    console.error('Erro ao atualizar trabalho:', error);
+  }
+}
+
+// Exemplos de uso:
+
+// Atualizar um trabalho
+updateWork("aef65e73-e6af-4064-a788-5cb49e5ec081", { // Substitua pelo UUID real do trabalho
+  description: "DAAesenvolvimento de site responsivo com React e Node.js",
+  price: 1800.09,
+  service_id: "f92d9720-9cbb-42b6-bc6c-2027beae6899"
+});
+```
+
++ Request Atualizar
+
+    + Headers
+
+            Content-Type: application/json
+            authorization: Bearer <token>
+
++ Response 200 (application/json)         
+    + Body 
+
+        {
+        "success": true,
+        "works": [
+            {
+                "work_id": "3893ed04-815d-450c-b7a2-9d8e18142e06",
+                "description": "Desenvolvimento de site responsivo com React e Node.js",
+                "price": 1800.1,
+                "service_id": "595aa724-a3cc-4642-8a2e-ab16e903f000"
+            },
+            {
+                "work_id": "42cbe756-9bac-423a-9f0c-47e7c9e288cc",
+                "description": "Work 2 do teste10@email.com: Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
+                "price": 168.42,
+                "service_id": "418ed73e-58de-418d-8b59-563997828bbc"
+            },
+            {
+                "work_id": "03b424e3-541b-4695-8e69-f731be8bde62",
+                "description": "Work 1 do teste10@email.com: Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
+                "price": 191.28,
+                "service_id": "4274bfc2-b9b5-4a18-a407-8911ea32cd3b"
+            }
+        ]
+        }
+
++ Response 400 (application/json)
+    + Body
+
+        { "success": false, "error": "Usuário não é um prestador." }
+        {
+        "success": false,
+        "issues": {
+            "code": "invalid_type",
+            "expected": "number",
+            "received": "nan",
+            "path": [
+            "price",
+            "max"
+            ],
+            "message": "Expected number, received nan",
+        },
+        "error": "Dados inválidos.",
+        }
+
++ Response 404 (application/json)
+    + Body
+
+            {
+                "success": false,
+                "error": "Trabalho não encontrado."
+            }
+
++ Response 429 (application/json)
+    + body
+
+            { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + Body
+
+            { "success": false, "error": "Erro inesperado." }
+            { "success": false, "error": "Erro ao atualizar trabalho." }

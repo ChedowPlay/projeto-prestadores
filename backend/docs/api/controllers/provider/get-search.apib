@@ -1,0 +1,153 @@
+## Search Providers [/search{?page,minprice,maxprice,sortprice,lat,lon,mindistance,maxdistance,sortdistance,services,state,cities}]
+
+### Search Providers [GET]
+
+Pesquise e filtre prestadores de serviços com diversos critérios.
+
+::: note
+Limite de acesso: Máxima de 50 tentativas, bloqueio de 120 segundos.
+:::
+
+**Tabela de localizações dos usuário testes**
+
+| Name            | Latitude   | Longitude  | City           | State |
+| --------------- | ---------- | ---------- | -------------- | ----- |
+| Usuário Teste 1 | -20.524801 | -54.657841 | Campo Grande   | MS    |
+| Usuário Teste 2 | -20.522345 | -54.655432 | Coxim          | MS    |
+| Usuário Teste 3 | -20.526789 | -54.659876 | Belo Horizonte | MG    |
+| Usuário Teste 4 | -20.520123 | -54.653210 | Curitiba       | PR    |
+| Usuário Banido  | -20.523456 | -54.656789 | Salvador       | BA    |
+| Usuário Teste 5 | -20.522756 | -54.653810 | Florianópolis  | SC    |
+| Usuário Teste 6 | -23.550520 | -46.633308 | São Paulo      | SP    |
+| Usuário Teste 7 | -22.906847 | -43.172897 | Rio de Janeiro | RJ    |
+| Usuário Teste 8 | -3.731862  | -38.526670 | Campo Grande   | CE    |
+| Usuário Teste 9 | -27.594870 | -48.548219 | Manaus         | AM    |
+| Usuário Teste 10| -15.799890 | -47.864140 | Brasília       | DF    |
+
+### **Funcionamento do services**
+```javascript
+/**
+* listaIds: Itens que o cliente quer
+* length: Valor total da lista
+*/
+const formatarListaBin = (listaIds, length) => {
+    const ordenada = listaIds.sort((a, b) => a - b);
+    // Cria um array de tamanho 'length' com todos os valores iniciados em 0
+    const resultado = Array(length).fill(0);
+    // Preenche as posições corretas com 1 (com base no índice do ID)
+    ordenada.forEach(id => {
+        if (id <= length) {
+            resultado[length - id] = 1;  // Mapeia o ID para a posição correta (invertida)
+        }
+    });
+    console.log("bin gerado:", resultado.join());
+    return resultado;
+};
+
+const binToDec = (listaBinaria) => {
+    const dec = listaBinaria.reduce((decimal, bit, index) => {
+        return decimal + bit * Math.pow(2, listaBinaria.length - 1 - index);
+    }, 0);
+    console.log("dec:", dec);
+    return dec;
+};
+
+// Exemplo
+// Cliente escolheu os itens 1, 24 e 14
+// A lista possui um total de 40 itens, use o totalServices no lugar do 40!!!
+const totalServices = Object.values(data).reduce((count, category) => count + category.length, 0);
+const lista = formatarListaBin([1, 24, 14], 40);
+const services = binToDec(lista);
+// `?services=${services}`
+```
+
++ Parameters
+    + page: `1` (number, optional) - Número da página
+        + Default: 1
+    + minprice: `50` (number, optional) - Preço mínimo
+    + maxprice: `200` (number, optional) - Preço máximo
+    + sortprice: `asc` (enum[string], optional) - Ordenar por preço
+        + Members
+            + `asc`
+            + `desc`
+    + lat: `-23.5505` (number, optional) - Latitude (-90 to 90)
+    + lon: `-46.6333` (number, optional) - Longitude (-180 to 180)
+    + mindistance: `1` (number, optional) - Distância mínima em km (0 a 1000)
+    + maxdistance: `10` (number, optional) - Distância máxima em km (0 a 1000)
+    + sortdistance: `asc` (enum[string], optional) - Ordenar por distância
+        + Members
+            + `asc`
+            + `desc`
+    + services: `7` (number, optional) - Número decimal que representa os serviços selecionados
+    + state: `MS` (string, optional) - UF do estado (2 caracteres)
+    + cities: `3` (number, optional) - Número decimal que representa as cidades selecionadas (mesmo funcionamento do services). Essa opção não requer o uso de state, pois cada id de city é único. Mesmo que duas cidades tenham o mesmo nome em Estados diferentes, seus ids serão distintos.
+
++ Response 200 (application/json)
+    + Body
+        {
+        "success": true,
+        "data": [
+            {
+            "provider_id": "123e4567-e89b-12d3-a456-426614174000",
+            "user_id": "123e4567-e89b-12d3-a456-426614174000",
+            "bio": "Professional service provider",
+            "name": "John Doe",
+            "picture": "https://example.com/picture.jpg",
+            "created_at": "2024-02-19T10:00:00Z",
+            "coordinates": {
+                "latitude": "-20.524801",
+                "longitude": "-54.657841",
+                "distance": 893.684
+            },
+            "address": {
+                "city": "Campo Grande",
+                "state": "MS"
+            },
+            "price": {
+                "min": 50,
+                "max": 200,
+                "avg": 125
+            },
+            "business": [
+                {
+                "service": "Hair Cut",
+                "category": "Beauty"
+                }
+            ]
+            }
+        ],
+        "pagination": {
+            "page": 1,
+            "limit": 10,
+            "total": 50
+        }
+        }
+
++ Response 400 (application/json)
+    + Body
+
+        {
+        "success": false,
+        "issues": {
+            "code": "invalid_type",
+            "expected": "number",
+            "received": "nan",
+            "path": [
+            "price",
+            "max"
+            ],
+            "message": "Expected number, received nan",
+        },
+        "error": "Dados incorretos para consulta.",
+        }
+
++ Response 429 (application/json)
+    + body
+
+            { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + Body
+
+            { "success": false, "error": "Erro inesperado." }
+            { "success": false, "error": "Erro ao buscar prestadores." }

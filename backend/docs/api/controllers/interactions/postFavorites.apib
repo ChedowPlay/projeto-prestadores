@@ -1,0 +1,79 @@
+## Favorites [/api/interactions/favorite]
+
+### Adiciona ou Remove um favorito [POST]
+
+::: warning
+**ESSA API FOI DESATIVADA!**
+:::
+
+Ao usar pela primeira vez, irá adicionar o provider_id a lista de favoritos do Usuário, e se realizar a mesma operação irá remove-lo.
+
+::: note
+Protegido pelo middleware `isAuth`.
+:::
+
+::: note
+Limite de acesso: Máxima de 5 tentativas, bloqueio de 120 segundos.
+:::
+
+### **Exemplo usando fetch**
+```javascript
+const URL = 'https://dev-diboaclub.onrender.com';
+const TOKEN = 'JWT.EXAMPLE.TOKEN';
+const provider_id: ''; 
+
+fetch(URL + '/api/interactions/favorite', {
+    method: 'POST',
+    headers: { 
+        "Content-Type": "application/json", 
+        "authorization": `Bearer ${TOKEN}`
+    },
+    body: JSON.stringify({ provider_id })
+})
+.then(resp => resp.json())
+.then(data => {
+    console.log(data);
+})
+.catch(error => {
+    console.error(error);
+});
+```
+
++ Request Listar favoritos
+    + Headers
+
+            Content-Type: application/json
+            authorization: Bearer <token>
+
++ Response 200 (application/json)
+    + body
+
+            { "success": true, "message": "Adicionado aos favoritos" }
+            { "success": true, "message": "Removido dos favoritos" }
+
+
++ Response 400 (application/json)
+    + Body
+
+            { "success": false, "error": "Dados inválidos." }
+
++ Response 401 (application/json)
+    + Body
+
+            // Usuário não encontrado
+            { "success": false, "error": "Usuário não autenticado", "logout": true }
+
++ Response 404 (application/json)
+    + Body
+
+            { "error": "Token não encontrado." }
+
++ Response 429 (application/json)
+    + body
+
+            { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + Body
+
+            { "error": "Erro inesperado." }

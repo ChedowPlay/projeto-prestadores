@@ -1,0 +1,91 @@
+## Complaints [/api/interactions/complaint]
+
+### Registrar denúncia [POST]
+
+Permite ao usuário registrar uma denúncia contra um prestador.
+
+- O usuário não precisa estar logado para poder registrar a denúncia.
+- O usuário pode registrar mais de uma denúncia contra o mesmo prestador.
+
+::: note
+Limite de acesso: Máxima de 1 tentativas, bloqueio de 300 segundos.
+:::
+
+::: warning
+O prestador será automaticamente banido ao receber 3 reclamações.
+:::
+
+A descrição deve ter no mínimo 10 caracteres e no máximo 512 caracteres.
+
+### **Exemplo usando fetch**
+```javascript
+const URL = 'https://dev-diboaclub.onrender.com';
+const data = {
+    provider_id: "xxx.xxx.xxx",
+    description: "Descrição detalhada da denúncias"
+};
+fetch(URL + '/api/interactions/complaint', {
+    method: 'POST',
+    headers: { 
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data)
+})
+.then(resp => resp.json())
+.then(data => {
+    console.log(data);
+})
+.catch(error => {
+    console.error(error);
+});
+```
+
++ Request Registrar denúncia
+    + Headers
+
+            Content-Type: application/json
+            authorization: Bearer <token>
+
+    + Body
+
+            {
+                "provider_id": "xxx.xxx.xxx",
+                "description": "Descrição detalhada da reclamação"
+            }
+
++ Response 201 (application/json)
+    + Body
+
+            {
+                "success": true,
+                "message": "Reclamação registrada com sucesso.",
+                "complaint": {
+                    "complaint_id": "fd95a3ac-e499-42ae-9889-9ba8773c8e71",
+                    "description": "Descrição detalhada da denúncias 1"
+                }
+            }
+
++ Response 400 (application/json)
+    + Body
+
+            {
+                "success": false,
+                "error": "Descrição deve ter entre 10 e 512 caracteres"
+            }
+            { "success": false, "error": "Dados inválidos." }
+
++ Response 404 (application/json)
+    + Body
+
+            { "success": false, "error": "Prestador não encontrado." }
+            { "success": false, "error": "Reclamação não encontrada ou você não tem permissão." }
+
++ Response 429 (application/json)
+    + body
+
+            { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + Body
+
+            { "error": "Erro inesperado." }

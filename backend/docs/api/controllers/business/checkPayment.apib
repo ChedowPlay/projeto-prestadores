@@ -1,0 +1,132 @@
+## Check payment [/api/payment/check{?status,collection_status,external_reference,preference_id,date_approved,payment_id}]
+
+### Check payment [GET]
+
+Processa os webhooks enviados pelo MercadoPago para validar o status do pagamento e atualizar o provider do usuário conforme o resultado.
+
+::: note
+Limite de acesso: Máxima de 30 tentativas, bloqueio de 120 segundos.
+:::
+
+::: note
+Protegido pelo middleware `isAuth`.
+:::
+
+::: warning
+Necesário ter o token do usuário no header **OU** o external_reference na query!
+:::
+
+
+### **Exemplo usando fetch**
+```javascript
+const URL = "https://dev-diboaclub.onrender.com";
+const PARAMS = "?collection_status=approved&payment_id=1333327951&status=approved&external_reference=8b5e861c-ce09-44a5-b570-bf69c272af4e&preference_id=1036561310-4f03f31b-6f1e-428b-b488-b3701a8176af&date_approved=2025-03-16T23:44:03.870-04:00";
+
+const externalReference = '5c488ae9-9f94-437c-86be-76b45dccc008';
+const token = 'JWT.EXAMPLE.TOKEN';
+
+// Teste usando o query parameter external_reference
+const urlWithQuery = `${URL}?external_reference=${externalReference}`;
+
+fetch(urlWithQuery, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+})
+  .then(response => response.json())
+  .then(data => console.log('Resposta do webhook (via query):', data))
+  .catch(error => console.error('Erro:', error));
+
+// Teste usando o header Authorization com token JWT
+fetch(URL, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  },
+})
+  .then(response => response.json())
+  .then(data => console.log('Resposta do webhook (via token):', data))
+  .catch(error => console.error('Erro:', error));
+```
+
++ Parameters
+    + status: `approved` (string, optional) - Status do pagamento. Exemplos: `approved`, `rejected`, `pending`.
+    + collection_status: `approved` (string, optional) - Status da collection. Exemplos: `approved`, `rejected`.
+    + external_reference: `8b5e861c-ce09-44a5-b570-bf69c272af4e` (string, **required**) - Referência externa do usuário (user_id) associada ao pagamento. Principal método de validação.
+    + preference_id: `1036561310-4f03f31b-6f1e-428b-b488-b3701a8176af` (string, optional) - ID da preferência gerada pelo MercadoPago.
+    + date_approved: `2025-03-16T23:44:03.870-04:00` (string, optional) - Data e hora em que o pagamento foi aprovado.
+    + payment_id: `1333327951` (string, optional) - ID do pagamento no MercadoPago. Não utilizado para validação específica.
+
++ Request Via token
+
+    + Headers
+
+        Content-Type: application/json
+        Authorization: Bearer <token>
+
++ Request Via query
+
+    + Headers
+
+        Content-Type: application/json
+
++ Response 200 (application/json)
+    + Body
+
+        {
+            "success": true,
+            "message": "Pagamento aprovado e provider atualizado"
+        }
+
+        {
+            "success": true,
+            "message": "Pagamento já foi processado anteriormente"
+        }
+
+        {
+            "success": true,
+            "message": "Pagamento rejeitado"
+        }
+
+        {
+            "success": true,
+            "message": "Status do pagamento: pending" // ou outro status
+        }
+
++ Response 400 (application/json)
+    + body
+
+        {
+            "success": false,
+            "error": "Dados de webhook GET inválidos"
+        }
+        {
+            "success": false,
+            "error": "Dados inválidos.",
+            "issues": { /* Detalhes do erro de validação */ }
+        }
+
++ Response 404 (application/json)
+    + body
+
+        {
+            "success": false,
+            "error": "Plano não encontrado."
+        }
+        {
+            "success": false,
+            "error": "Plano não encontrado."
+        }
+
++ Response 429 (application/json)
+    + body
+
+        { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + body
+    
+        { "success": false, "error": "Erro ao atualizar status do provider" }
+        { "success": false, "error": "Erro inesperado." }

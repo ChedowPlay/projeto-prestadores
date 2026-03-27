@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+  nodejs:
+    build: .
+    container_name: server
+    ports:
+      - "3001:3001"
+    networks:
+      - app-network
+    volumes:
+      - .:/app
+      - ./src/public:/usr/server/src/public     # Persistência da pasta public
+      - ./banco.sqlite:/usr/server/banco.sqlite # Persistência do banco de dados
+    command: npm run server
+
+
+  nginx:
+    build:
+      context: ./nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - app-network
+    depends_on:
+      - nodejs
+
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

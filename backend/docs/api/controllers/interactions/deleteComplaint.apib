@@ -1,0 +1,91 @@
+## Complaints [/api/interactions/complaint/{complaint_id}]
+
+### Remover uma denúncia [DELETE]
+
+::: warning
+**ESSA API FOI DESATIVADA!**
+:::
+
+Permite ao usuário remover uma reclamação que ele mesmo registrou.
+
+::: note
+Protegido pelo middleware `isAuth`.
+:::
+
+::: note
+Limite de acesso: Máxima de 20 tentativas, bloqueio de 120 segundos.
+:::
+
+### **Exemplo usando fetch**
+
+```javascript
+const URL = 'https://dev-diboaclub.onrender.com';
+const TOKEN = 'JWT.EXAMPLE.TOKEN';
+const COMPLAINT_ID = 'xxx.xxx.xxx';
+
+fetch(URL + '/api/interactions/complaint/' + COMPLAINT_ID, {
+    method: 'DELETE',
+    headers: { 
+        "Content-Type": "application/json", 
+        "authorization": `Bearer ${TOKEN}`
+    }
+})
+.then(resp => resp.json())
+.then(data => {
+    console.log(data);
+})
+.catch(error => {
+    console.error(error);
+});
+```
+
++ Parameters
+    + complaint_id: `xx.xx.xx` (string, required) - ID único da reclamação
+
++ Request Remover Reclamação
+    + Headers
+
+            Content-Type: application/json
+            authorization: Bearer <token>
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "success": true,
+                "message": "Reclamação removida com sucesso"
+            }
+
++ Response 400 (application/json)
+    + Body
+
+            { "success": false, "error": "Dados inválidos." }
+
++ Response 401 (application/json)
+    + Body
+
+            // Usuário não encontrado
+            { "success": false, "error": "Usuário não autenticado", "logout": true }
+
++ Response 403 (application/json)
+    + Body
+
+            {
+                "success": false,
+                "error": "Usuário não tem permissão para remover esta reclamação."
+            }
+
++ Response 404 (application/json)
+    + Body
+
+            { "error": "Token não encontrado." }
+
++ Response 429 (application/json)
+    + body
+
+            { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + Body
+
+            { "error": "Erro inesperado." }

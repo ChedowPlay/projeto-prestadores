@@ -1,0 +1,26 @@
+.locationBackground{
+  padding-left: 15px;
+  padding-top: 2px;
+}
+.sizeAcordion {
+  max-width: 96%; 
+  width: 350px; 
+  margin-bottom: 10px;
+}
+@media (max-width: 1024px) {
+  .border{
+    border: 2px solid #4e4e4e !important;
+    border-radius: 5px !important; 
+  }  
+  .sizeAcordion{
+    width: 33%;
+    margin-top: 15px;
+  }
+}
+@media (max-width: 720px) { 
+  .sizeAcordion{
+    width: 100%;
+    padding-right: 15px;
+    padding-bottom: 15px;
+  }
+}

@@ -1,0 +1,150 @@
+<!DOCTYPE HTML
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+    xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="UTF-8" />
+
+    <style type="text/css">
+        body,
+        html {
+            justify-content: center;
+            display: flex;
+            height: min-content;
+            padding: 0;
+            margin: 0;
+        }
+
+        table td,
+        table th,
+        table,
+        tbody,
+        tfoot,
+        thead {
+            padding: 12px;
+            margin: 0;
+            border-collapse: collapse;
+        }
+
+        .td-info {
+            padding: 5pt 5pt 5pt 5pt;
+            vertical-align: middle;
+            border-bottom-width: 0pt;
+            height: 24pt;
+        }
+
+        p,
+        pre,
+        a {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1;
+            text-align: center;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            color: #0b2b40;
+            font-style: normal;
+        }
+
+        .title {
+            font-weight: 700;
+            font-size: 16pt;
+        }
+
+        .desc {
+            font-weight: 400;
+            font-size: 14pt;
+        }
+
+        .code {
+            font-weight: 400;
+            font-size: 14pt;
+            border-radius: 6px;
+            padding: 12px;
+            border: 2px solid #04BF8A;
+        }
+
+        .aviso {
+            font-weight: 300;
+            font-size: 11pt;
+            margin-top: 25px;
+            height: 25pt;
+        }
+    </style>
+</head>
+
+<body bgcolor="#F1F1F1">
+    <center bgcolor="#F1F1F1" style="width: 100%; background-color: #F1F1F1;">
+        <table bgcolor="#FFF">
+            <!-- HEADER -->
+            <thead>
+                <tr>
+                    <th class="td-info" colspan="2">
+                        <p class="title">ATIVE SUA CONTA!</p>
+                        <p class="desc" style="height: 10pt">Use o c&oacute;digo abaixo para validar seus dados e ativar
+                            sua conta</p>
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <!-- CODE -->
+                <tr>
+                    <td class="td-info" colspan="2" style="height: 145pt;">
+                        <pre class="code"><%= codigo %></pre>
+                    </td>
+                </tr>
+
+
+                <!-- MESSAGE -->
+                <tr>
+                    <td colspan="2" class="td-info">
+                        <hr color="#04BF8A" />
+                        <p class="aviso">
+                            Voc&ecirc; recebeu este e-mail porque solicitou uma verificação de dados de sua conta no
+                            servi&ccedil;o
+                            Aqui-Tem-Peixe.<br />Caso essa solicita&ccedil;&atilde;o n&atilde;o seja sua, pedimos que
+                            ignore
+                            este e-mail.
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+
+
+            <!-- FOOTER -->
+            <tfoot bgcolor="#0b2b40">
+                <tr>
+                    <td>
+                        <a href="https://example.com/TermosUso" target="_blank"
+                            style="font-weight: 700; font-size: 13pt; color: #fff; font-weight: bold; text-decoration: none;">
+                            Termos de Uso</a>
+                    </td>
+                    <td rowspan="3" align="right">
+                        <img alt="" height="100px" src="https://dummyimage.com/100x100/fff/aaa" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="https://example.com/PoliticaPrivacidade" target="_blank"
+                            style="font-weight: 700; font-size: 13pt; color: #fff; font-weight: bold; text-decoration: none;">
+                            Política de Privacidade</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img alt="" height="50px" src="https://dummyimage.com/296x71/fff/aaa" />
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </center>
+</body>
+
+</html>

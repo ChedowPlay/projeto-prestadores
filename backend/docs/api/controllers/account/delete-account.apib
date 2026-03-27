@@ -1,0 +1,85 @@
+## Deletar conta [/api/account]
+
+### Deletar conta [DELETE]
+
+Exclui a conta do usuário e remove todos os dados associados, incluindo registros de provider, trabalhos, arquivos e foto de perfil.
+
+::: note
+Limite de acesso: Máxima de 10 tentativas, bloqueio de 120 segundos.
+:::
+
+::: note
+Protegido pelo middleware `isAuth`.
+:::
+
+::: warning
+A conta será removida se o usuário não possuir um plano de assinatura ativo.
+:::
+
+::: warning
+Essa API ainda não foi testada e **não possui proteção 2F.**
+:::
+
+
+### **Exemplo usando fetch com formData**
+```javascript
+const URL = "https://dev-diboaclub.onrender.com";
+const TOKEN = "JWT.EXAMPLE.TOKEN";
+
+fetch(URL + "/api/account", {
+  method: "DELETE",
+  headers: {
+    "Content-Type": "application/json",
+    "authorization": `Bearer ${TOKEN}`
+  }
+})
+.then(response => response.json())
+.then(data => console.log("Resposta:", data))
+.catch(error => console.error("Erro:", error));
+```
+
++ Request Excluir conta
+
+    + Headers
+
+            Content-Type: application/json
+            authorization: Bearer <token>
+
++ Response 200 (application/json)
+        
+    + body
+
+            {
+                "success": true,
+                "message": "Conta excluída com sucesso, todos os dados foram removidos."
+            }
+
++ Response 400 (application/json)
+    + Body
+
+            { "success": false, "error": "Erro no upload da imagem."}
+            { "success": false, "error": "Erro ao deletar arquivo." }
+
++ Response 401 (application/json)
+    + Body
+
+            { "success": false, "error": "Usuário não autenticado", "logout": true }
+
++ Response 403 (application/json)
+    + Body
+
+            {
+                "success": false,
+                "error": "Não é possível excluir a conta enquanto houver uma assinatura ativa.",
+                "expiration_date": "DATA.DA.ASSINATURA"
+            }
+
++ Response 429 (application/json)
+    + body
+
+            { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + Body
+
+            { "error": "Erro inesperado." }

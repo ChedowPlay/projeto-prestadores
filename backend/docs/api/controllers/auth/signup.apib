@@ -1,0 +1,204 @@
+## Signup [/auth/signup]
+
+### Criar conta de usuário [POST]
+
+Cria a conta de um usuário, podendo ser um contratante ou prestador.  
+
+::: note
+Limite de acesso: Máxima de 5 tentativas, bloqueio de 120 segundos.
+:::
+
+### **Campos obrigatórios - credentials**  
+- **name** (string, mínimo 2 caracteres)  
+- **email** (string, e-mail válido)  
+- **password** (string, mínimo 8, máximo 125 caracteres)  
+- **phone** (string, 10 a 15 caracteres)  
+
+### **Campos opcionais**
+> necessários adicionar como verdadeiro
+- **accept_privacy_Policy** (boolean) default: false
+- **accept_terms_use** (boolean) default: false
+
+### **Campos opcionais:**  
+- **whatsapp** (string, 10 a 15 caracteres)  
+- **allow_see_address** (boolean) default: false
+- **address** (object): Obrigatório se o objeto **provider** for informado  
+  - **cep** (string, 8 caracteres)  
+  - **city** (string, 2 a 64 caracteres)  
+  - **state** (string, 2 a 64 caracteres)  
+  - **street** (string, 2 a 64 caracteres)  
+  - **number** (string, 1 a 8 caracteres)  
+  - **latitude** (string, 12 caracteres, opcional)  
+  - **longitude** (string, 12 caracteres, opcional)  
+
+### **A senha devem obedecer aos seguintes requisitos**:
+- Mínimo 8 caracteres.
+- Pelo menos uma letra minúscula.
+- Pelo menos uma letra MAIÚSCULA.
+- Pelo menos um número (0 a 9).
+- Pelo menos um caractere especial: ``!@#$%¨:;^&*()[]{}/*-+|\\=<>``.
+- Não deve conter palavras-chave que facilitem adivinhação (ex.: "senha", "1234", "password", "admin").
+
+
+### **Script para gerenciamento de senha**
+```javascript
+// 250208V
+// powerd by: LucasATS
+
+const wordlistPass = [
+    '123456', '123', 'teste123*',
+    'senha', 'password', 'qwerty',
+    'abc123', 'admin', 'iloveyou',
+    'letmein', 'monkey', 'sunshine',
+    'superman', 'welcome', 'senha'];
+const caractereEspeciais = '!@#$%¨:;^&*()[]{}/*-+|\\=<>'.split('');
+function validadePassword(senha) {
+    if (senha.length < 8) return { success: false, error: 'A senha deve conter pelo menos 8 caracteres.', status: 422 };
+
+    const letrasMinusculas = /[a-zà-ÿ]/.test(senha);
+    if (!letrasMinusculas) return { success: false, error: 'A senha deve conter pelo menos uma letra minúscula.', status: 422 };
+
+    const letrasMaiusculas = /[A-ZÀ-Ÿ]/.test(senha);
+    if (!letrasMaiusculas) return { success: false, error: 'A senha deve conter pelo menos uma letra MAIÚSCULA.', status: 422 };
+
+    const existeNumero = /\d/.test(senha);
+    if (!existeNumero) return { success: false, error: 'A senha deve conter pelo menos um número de 0 a 9.', status: 422 };
+
+    const existeCaracteresEspeciais = caractereEspeciais.some(caracter => RegExp(`\\${caracter}`).test(senha));
+    if (!existeCaracteresEspeciais) return { success: false, error: 'A senha deve conter pelo menos um caractere especial !@#$%¨:;^&*()[]{}/*-+|\\=<>', status: 422 };
+
+    const existePlavrasChaves = wordlistPass.some(palavra => RegExp(`\\${palavra}`).test(senha));
+    if (existePlavrasChaves) return { success: false, error: 'A senha é facilmente adivinhável.', status: 422 };
+
+    return { success: true, message: 'A senha é segura.', status: 200 };
+}
+```
+
+### **Exemplo usando fetch:**
+```javascript
+const URL = 'https://dev-diboaclub.onrender.com';
+
+fetch(URL+'/auth/signup', {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(
+        {
+    "name": "Usuário Teste 42",
+    "email": "Teste42@email.com",
+    "password": "Teste@129",
+    "phone": "4567890123",
+    "accept_privacy_Policy": true,
+    "accept_terms_use": true,
+}),
+})
+.then(resp => resp.json())
+.then(data => {
+    console.log(data);
+})
+.catch(error => {
+    console.error(error);
+});
+```
+
+::: note
+Exite dois arquivos de exemplo que mostram em detalhes o login e a criação de conta.
+login.html e criacao_conta.html.
+:::
+
++ Request Credentials
+    + Headers
+            Content-Type: application/json
+    + Body
+        {
+            "name": "Usuário Teste 1",
+            "email": "teste1@email.com",
+            "password": "Teste@129",
+            "phone": "4567890123",
+            "accept_privacy_Policy": true,
+            "accept_terms_use": true,
+        }
+
++ Request Credentials 2
+    + Headers
+            Content-Type: application/json
+
+    + Body
+        {
+            "name": "Usuário Teste 1",
+            "email": "teste1@email.com",
+            "password": "Teste@129",
+            "phone": "4567890123",
+            "whatsapp": "4567890123",
+            "allow_see_address": true,
+            "accept_privacy_Policy": true,
+            "accept_terms_use": true,
+            "address": {
+                "cep": "12345678",
+                "city": "Cidade Exemplo",
+                "state": "AA",
+                "street": "Rua Exemplo",
+                "number": "123",
+                "latitude": "123456789123",
+                "longitude": "123456789123"
+            }
+        }
+
++ Response 201 (application/json)
+    + Body
+        {
+            "success": true,
+            "message": "Conta criada com sucesso.",
+            "token": "JWT.EXAMPLE.TOKEN",
+            "id": "e550aebc-ff6d-4d07-b23e-196eed99ac08",
+            "name": "Usuário Teste 1",
+            "email": "teste1@email.com",
+            "phone": "4567890123",
+            "is_first_access": false,
+            "accept_privacy_Policy": true,
+            "accept_terms_use": true,
+            "whatsapp": "4567890123",
+            "address": {
+                "cep": "12345678",
+                "city": "Cidade Exemplo",
+                "state": "AA",
+                "street": "Rua Exemplo",
+                "number": "123",
+                "latitude": "123456789123",
+                "longitude": "123456789123"
+            }
+        }
+
++ Response 400 (application/json)
+    + Body
+        { "success": false, "issues": [], "error": "Dados inválidos." }
+
++ Response 401 (application/json)
+    + Body
+        { "success": false, "error": "Token do provider inválido." }
+        { "success": false, "error": "Erro na validação da senha." }
+        
++ Response 405 (application/json)
+    + body
+        // Método não encontrado
+        { "success": false, "error": "Não permitido." }
+
++ Response 409 (application/json)
+    + Body
+        { "success": false, "error": "E-mail em uso." }
+
++ Response 422 (application/json)
+    + Body
+        { "success": false, "error": "A senha deve conter pelo menos 8 caracteres." }
+        { "success": false, "error": "A senha deve conter pelo menos uma letra minúscula." }
+        { "success": false, "error": "A senha deve conter pelo menos uma letra MAIÚSCULA." }
+        { "success": false, "error": "A senha deve conter pelo menos um número de 0 a 9." }
+        { "success": false, "error": "A senha deve conter pelo menos um caractere especial !@#$%¨:;^&*()[]{}/*-+|\\=<>" }
+        { "success": false, "error": "A senha é facilmente adivinhável." }
+
++ Response 429 (application/json)
+    + Body
+        { "success": false, "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + Body
+        { "success": false, "error": "Erro ao criar usuário." }

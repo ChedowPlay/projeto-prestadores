@@ -1,0 +1,48 @@
+.filters {
+    background-color: #cccccc; 
+    border-radius: 18px;
+    border: none;
+    color: #fff;
+    line-height: 15px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    white-space: nowrap;
+  }
+  
+  .filters:hover {
+    transform: scale(1.05);  
+  }
+  
+  .filters.selected {
+    background-color: #ffc466;
+  }
+  .hide-scrollbar {
+    overflow-x: auto;
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .mostSearched{
+    padding-left: 9rem;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none; 
+  }
+  @media (max-width: 1800px){
+    .hide-scrollbar{
+        justify-content: center;
+    }
+  }
+  @media (max-width: 1245px){
+    .hide-scrollbar{
+        justify-content: start;
+    }
+  }
+  @media (max-width: 1022px){
+    .mostSearched{
+      padding-left: 0px;
+    }
+  }
+  

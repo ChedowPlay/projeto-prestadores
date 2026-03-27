@@ -1,0 +1,86 @@
+## Favorites [/api/interactions/favorite]
+
+### Obter lista de favoritos [GET]
+
+::: warning
+**ESSA API FOI DESATIVADA!**
+:::
+
+Permite obter uma lista de favoritos do usuário.
+
+::: note
+Protegido pelo middleware `isAuth`.
+:::
+
+::: note
+Limite de acesso: Máxima de 20 tentativas, bloqueio de 120 segundos.
+:::
+
+### **Exemplo usando fetch**
+```javascript
+const URL = 'https://dev-diboaclub.onrender.com';
+const TOKEN = 'JWT.EXAMPLE.TOKEN';
+
+fetch(URL + '/api/account/favorite', {
+    method: 'GET',
+    headers: { 
+        "Content-Type": "application/json", 
+        "authorization": `Bearer ${TOKEN}`
+    },
+})
+.then(resp => resp.json())
+.then(data => {
+    console.log(data);
+})
+.catch(error => {
+    console.error(error);
+});
+```
+
++ Request Listar favoritos
+    + Headers
+
+            Content-Type: application/json
+            authorization: Bearer <token>
+
++ Response 200 (application/json)
+    + body
+
+            {
+                "success": true,
+                "favorites": [
+                    {
+                        "provider_id": "UUID-XXX-XX-XXX",
+                        "bio": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\nAenean commodo ligula eget dolor. Aenean massa.\nCum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\nDonec quam felis, ultricies nec, pellentesque eu, pretium quis.",
+                        "about": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n            Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\nDonec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.\nNulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.\nIn enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.\nNullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus e",
+                        "picture": "https://api.dicebear.com/9.x/initials/png?seed=Usuário Teste 1"
+                    }
+                ]
+            }
+
+
++ Response 400 (application/json)
+    + Body
+
+            { "success": false, "error": "Dados inválidos." }
+
++ Response 401 (application/json)
+    + Body
+
+            // Usuário não encontrado
+            { "success": false, "error": "Usuário não autenticado", "logout": true }
+
++ Response 404 (application/json)
+    + Body
+
+            { "error": "Token não encontrado." }
+
++ Response 429 (application/json)
+    + body
+
+            { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + Body
+
+            { "error": "Erro inesperado." }

@@ -1,0 +1,160 @@
+## Atualizar dados usuário [/api/account/picture]
+
+### Atualizar dados [PUT]
+
+Pode ser usado para atualizar dados da conta usuário e (ou) dados do provider.
+
+Não é permitido alterar e-mail e senha.
+
+::: note
+Limite de acesso: Máxima de 10 tentativas, bloqueio de 120 segundos.
+:::
+
+::: note
+Protegido pelo middleware `isAuth`.
+:::
+
+> Retorno 200 é o mesmo do [GET /api/account](#provider-provider-details-get)
+
+### Dados que podem ser alterados com essa API
+
+- name: `John Doe` (string, optional) – Nome do usuário (mínimo 2 caracteres)
+- phone: `11987654321` (string, optional) – Telefone do usuário (entre 10 e 15 caracteres)
+- whatsapp: `11987654321` (string, optional) – Número do WhatsApp (entre 10 e 15 caracteres)
+- accept_privacy_Policy: true (boolean, optional) – Indica se o usuário aceita a política de privacidade
+- accept_terms_use: true (boolean, optional) – Indica se o usuário aceita os termos de uso
+- allow_see_address: false (boolean, optional) – Indica se é permitido ver o endereço
+
+- address (object, optional)
+    - cep: `12345678` (string) – CEP (8 caracteres)
+    - city: `São Paulo` (string) – Cidade (entre 2 e 64 caracteres)
+    - state: `SP` (string) – Estado (2 caracteres)
+    - street: `Rua Exemplo` (string) – Rua (entre 2 e 64 caracteres)
+    - number: `123` (string) – Número (entre 1 e 8 caracteres)
+    - latitude: `-23.123456789` (string, optional) – Latitude (12 caracteres)
+    - longitude: `-46.123456789` (string, optional) – Longitude (12 caracteres)
+
+- provider (object, optional)
+    - bio: `Descrição do prestador` (string) – Biografia do prestador (entre 1 e 256 caracteres)
+
+    - **Nota:** Caso o objeto `provider` seja enviado, o campo `address` se torna obrigatório para criação do prestador.
+
+### **Exemplo usando fetch**
+```javascript
+const URL = "https://dev-diboaclub.onrender.com";
+const TOKEN = "JWT.EXAMPLE.TOKEN";
+
+fetch(`${URL}/api/account`, {
+  method: "PUT",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${TOKEN}`,
+  },
+  body: JSON.stringify({
+    "name": "Novo nome usuário Teste",
+    "provider": {
+        "bio": "Nova descrição do prestador",
+    },
+  }),
+})
+  .then(response => response.json())
+  .then(data => console.log("Resposta:", data))
+  .catch(error => console.error("Erro:", error));
+```
+
++ Request Alterar dados
+
+    + Headers
+
+            authorization: Bearer <token>
+
+    + Body
+
+            {
+                "name": "Novo nome usuário Teste",
+                "provider": {
+                    "bio": "Nova descrição do prestador"
+                }
+            }
+
+
++ Response 200 (application/json)
+        
+    + body
+            {
+            "success": true,
+            "provider_id": "a6e6279c-a378-44fe-b0b3-5d736c94bc52",
+            "bio": "yy Descrição do prestador",
+            "name": "thslis",
+            "phone": "4567890123",
+            "whatsapp": null,
+            "picture": "https://api.dicebear.com/9.x/initials/png?seed=thslis",
+            "created_at": "2025-03-07T23:50:52.076Z",
+            "price": {
+                "min": 0,
+                "max": 0,
+                "avg": 0
+            },
+            "works": {
+                "count": 0,
+                "data": []
+            },
+            "album": {
+                "count": 0,
+                "data": []
+            },
+            "address": {
+                "cep": "12345678",
+                "city": "Cidade Exemplo",
+                "state": "ES",
+                "street": "Rua Exemplo",
+                "number": "123",
+                "latitude": "123456789123",
+                "longitude": "123456789123"
+            },
+            "plan": {
+                "paid_at": null,
+                "has_paid": false,
+                "pay_at": "2025-04-08T06:51:21.000Z"
+            },
+                "user_id": "c4f9bace-b1be-4461-84c2-a34a93714f51",
+                "email": "lucas.almida.da.silva@gmail.com"
+            }
+
++ Response 400 (application/json)
+    + Body
+
+        {
+        "success": false,
+        "issues": {
+            "code": "invalid_type",
+            "expected": "number",
+            "received": "nan",
+            "path": [
+            "price",
+            "max"
+            ],
+            "message": "Expected number, received nan",
+        },
+        "error": "Dados inválidos.",
+        }
+
++ Response 401 (application/json)
+    + Body
+
+            { "success": false, "error": "Usuário não autenticado", "logout": true }
+
++ Response 404 (application/json)
+    + Body
+
+            { "error": "Usuário não encontrado." }
+
++ Response 429 (application/json)
+    + body
+
+            { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + Body
+
+            { "error": "Erro inesperado." }

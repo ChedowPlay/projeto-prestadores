@@ -1,0 +1,50 @@
+services:
+  api:
+    image: node:latest
+    container_name: diboa_api
+    working_dir: /app
+    environment:
+      NODE_ENV: development
+    ports:
+      - 4000:4000
+    volumes:
+      - ./backend:/app
+    command: >
+      sh -c "
+        npm install -g @nestjs/cli typescript ts-node
+        npm install typeorm postgres
+        npm run build
+        npm run start:dev
+      "
+    depends_on:
+      - db
+
+  webapp:
+    image: node:latest
+    container_name: diboa_webapp
+    working_dir: /app
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app
+    command: >
+      sh -c "
+        npm install
+        npm run dev
+      "
+    depends_on:
+      - api
+
+  db:
+    image: postgres:latest
+    container_name: diboa_postgres_db
+    hostname: localhost
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: diboa_db
+    restart: unless-stopped

@@ -1,0 +1,106 @@
+.container {
+  max-width: 400px;
+  margin: 5% auto;
+  padding: 24px;
+  border-radius: 12px;
+  border: 2px solid #000000;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.container h1 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.container p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.resumo {
+  text-align: left;
+  background-color: #f8f8f8;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.resumo h2 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.resumo .categoria {
+  background-color: #ffcc80;
+  padding: 5px 10px;
+  border-radius: 6px;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.resumo .perfil {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-top: 8px;
+}
+
+.resumo img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.resumo .motivos {
+  margin-top: 12px;
+}
+
+.resumo label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.resumo input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+
+.resumo .descricao {
+  font-size: 5px;
+  color: #444;
+  margin-top: 8px;
+}
+
+.button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #ffb347;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: #ffa726;
+}

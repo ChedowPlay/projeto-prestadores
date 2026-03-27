@@ -1,0 +1,122 @@
+## Signin [/auth/signin]
+
+### Acessar conta de usuário [POST]
+
+Realiza o login do usuário, gerando um token de acesso para as próximas requisições.
+
+::: note
+Limite de acesso: Máxima de 5 tentativas, bloqueio de 120 segundos.
+:::
+
+::: warning
+Guarde o token via cookies no navegador do usuário.
+:::
+
+### Contas de Usuários Testes
+
+Disponíveis apenas para ambiente de desenvolvimento.
+
+> Password: Teste@129
+
+| Name             | Email             | Role        |
+| ---------------- | ----------------  | ----------- |
+| Usuário Teste 1  | teste1@email.com  | Prestador   |
+| Usuário Teste 2  | teste2@email.com  | Prestador   |
+| Usuário Teste 3  | teste3@email.com  | Contratante |
+| Usuário Teste 4  | teste4@email.com  | Contratante |
+| Usuário Teste 5 (Não possui jobs) | teste5@email.com  | Prestador   |
+| Usuário Teste 6  | teste6@email.com  | Prestador   |
+| Usuário Teste 7  | teste7@email.com  | Prestador   |
+| Usuário Teste 8  | teste8@email.com  | Prestador   |
+| Usuário Teste 9  | teste9@email.com  | Prestador   |
+| Usuário Teste 10 | teste10@email.com | Prestador   |
+| Usuário Banido   | banido@email.com  | Prestador   |
+
+### **Exemplo usando fetch**
+```javascript
+const URL = 'https://dev-diboaclub.onrender.com';
+
+fetch(URL + '/auth/signin', {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(
+        {
+            "email": "teste1@email.com",
+            "password": "Teste@129"
+        }),
+})
+.then(resp => resp.json())
+.then(data => {
+    console.log(data);
+})
+.catch(error => {
+    console.error(error);
+});
+```
+
++ Request Credentials
+    + Headers
+            Content-Type: application/json
+    + body
+        {
+            "email": "teste1@email.com", 
+            "password": "Teste@123",
+        }
+
++ Response 200 (application/json)
+        
+    + body
+        {
+            "success": true,
+            "message": "Acesso permitido",
+            "token": "JWT.EXAMPLE.TOKEN",
+            "picture": "LINK.FOTOPERFIL.COM/media/picture/CODIGOFOTO.webp",
+            "is_first_access": true,
+            "id": "e550aebc-ff6d-4d07-b23e-196eed99ac08",
+            "name": "Usuário Teste 1",
+            "email": "teste1@email.com",
+            "picture": "LINK.FOTOPERFIL.COM/media/picture/CODIGOFOTO.webp",
+            "whatsapp": null,
+            "address": {
+                "cep": null,
+                "city": null,
+                "state": null,
+                "street": null,
+                "number": null,
+                "latitude": null,
+                "longitude": null
+            }
+        }
+        
++ Response 400 (application/json)
+    + Body
+        { "success": false, "issues": [], "error": "Dados inválidos." }
+
+        // Dados incorretos no credentials
+        { "success": false, "error": "Usuário ou senha incorretos." }
+        
++ Response 401 (application/json)
+    + body
+        { "success": false, "error": "Token do provider inválido." }
+
+        // Senha incorreta OU Não autorizado
+        { "success": false, "error": "Usuário ou senha incorretos." }
+        
++ Response 404 (application/json)
+    + body
+        // Usuário não encontrado
+        { "success": false, "error": "Usuário ou senha incorretos." }
+        
++ Response 405 (application/json)
+    + body
+        // Usuário não encontrado
+        { "success": false, "error": "Não permitido." }
+        
++ Response 429 (application/json)
+    + body
+        { "success": false, "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+        
++ Response 500 (application/json)
+    + body
+        // Erro de geração de token OU Erro inesperado
+        { "success": false, "error": "Erro inesperado." }

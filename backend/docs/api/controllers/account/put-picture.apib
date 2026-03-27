@@ -1,0 +1,109 @@
+## Alterar foto de perfil [/api/account/picture]
+
+### Alterar foto de perfil [PUT]
+
+Pode ser usado para enviar ou trocar a foto de perfil do usuário. As imagens são automaticamente recortadas para 512x512 e convertidas para WebP.
+
+::: note
+Limite de acesso: Máxima de 10 tentativas, bloqueio de 120 segundos.
+:::
+
+::: note
+Protegido pelo middleware `isAuth`.
+:::
+
+::: note
+Limite máximo de upload: 100mb. Tamanho máximo do arquivo: 4mb.
+:::
+
+::: warning
+Não utilize o ``Content-Type: application/json`` no header dessa API. Não há necessidade de uso de Content-Type!
+:::
+
+::: warning
+Utilize o método FormData para o envio de arquivos.
+:::
+
+### **Exemplo usando fetch com formData**
+```javascript
+const uploadProfilePicture = async () => {
+  const URL = "https://dev-diboaclub.onrender.com";
+  const TOKEN = "JWT.EXAMPLE.TOKEN";
+
+  // Baixar uma imagem da web e transformá-la em um blob
+  const imageUrl = "https://picsum.photos/1024/1024.jpg"; // API imagem aleatória
+  const response = await fetch(imageUrl);
+  const blob = await response.blob();
+  const file = new File([blob], "picture.jpg", { type: "image/jpeg" });
+
+  // Criar FormData
+  const formData = new FormData();
+  formData.append("picture", file);
+
+  // Fazer a requisição para a API
+  fetch(URL + "/api/account/picture", {
+    method: "PUT",
+    headers: {
+      "authorization": `Bearer ${TOKEN}`,
+    },
+    body: formData,
+  })
+  .then(response => response.json())
+  .then(data => console.log("Resposta:", data))
+  .catch(error => console.error("Erro:", error));
+};
+
+// Executar upload
+uploadProfilePicture();
+
+```
+
++ Request Enviar foto de perfil
+
+    + Headers
+
+            authorization: Bearer <token>
+
+    + Body
+
+            { "picture": BLOB_IMAGE }
+
++ Response 200 (application/json)
+        
+    + body
+
+            {
+                "success": true,
+                "message": "Código de segurança enviado.",
+                "picture": "LINK.FOTOPERFIL.COM/media/picture/CODIGOFOTO.webp"
+            }
+
++ Response 400 (application/json)
+    + Body
+
+            { "success": false, "error": "Erro no upload da imagem."}
+
++ Response 401 (application/json)
+    + Body
+
+            { "success": false, "error": "Usuário não autenticado", "logout": true }
+
++ Response 404 (application/json)
+    + Body
+
+            { "error": "Token não encontrado." }
+
++ Response 413 (application/json)
+    + body
+
+            { "error": "O tamanho do arquivo excede o limite permitido." }
+
++ Response 429 (application/json)
+    + body
+
+            { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + Body
+
+            { "error": "Erro inesperado." }

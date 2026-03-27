@@ -1,0 +1,238 @@
+.homeSection {
+  position: relative;
+  height: 87vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+/* Fundo azul curvado */
+.homeSection::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  margin-top: 30px;
+  height: 100%;
+  background: url('../../public/images/Background-Home (2).png') no-repeat center;
+  background-size: cover;
+  z-index: 0;
+}
+
+.layoutContainer {
+  z-index: 1;
+  position: relative;
+}
+.dog {
+  z-index: 1;
+  position: relative;
+}
+.desktopText {
+   margin-top: 2%;
+}
+.subTitle {
+font-size: 25px;
+}	
+
+.dog {
+  height: 70vh;
+  margin-top: 23px;
+  width: fit-content;
+  
+}
+
+.adjustDog{
+  margin-top: 23px;
+}
+
+.raio {
+  position: absolute;
+  top: 35%;
+  left: 0;
+  z-index: 10;
+}
+
+.buttons {
+  width: 18vw;
+  height: 7vh;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 10px;
+}
+.Title{
+  margin-top: 5px;
+  font-size: 40px;
+  line-height: 40px;
+  margin-right: 30px;
+  margin-bottom: 30px;
+}
+.lineOne {
+  display: block;
+  margin-bottom: 20px; 
+}
+
+.lineTwo {
+  display: block;
+}
+
+.layoutContainer{
+  margin-left: 50px;
+}
+
+@media (max-width: 870px) {
+  .dog {
+    height: 50vh;
+    width: 40vw;
+  }
+}
+@media (max-width: 752px) {
+  .dog {
+    height: 30vh;
+    width: 35vw;
+  }
+  .Title {
+    font-size: 10px;
+    line-height: 20px;
+    margin-right: 0;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+
+  .subTitle {
+    font-size: 15px;
+    color: #fff;
+  }
+}
+
+@media (max-width: 994px) {
+  .homeSection {
+    flex-direction: row-reverse; 
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    height: 80vh;
+    background-size: 120%; 
+    background-repeat: no-repeat;
+  }
+
+  .dog {
+    height: 60vh;
+  }
+
+  .layoutContainer {
+    flex: 1;
+  }
+
+  .desktopText {
+    margin-top: 0;
+  }
+
+  .Title {
+    font-size: 28px;
+    line-height: 20px;
+    margin-right: 0;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+
+  .subTitle {
+    font-size: 15px;
+    color: #fff;
+  }
+
+  .buttons {
+    width: 22vw;
+    height: 6vh;
+    font-size: 0.9rem;
+  }
+
+  .ButtonsLayout {
+    gap: 10px;
+  }
+}
+
+
+
+@media screen and (max-width: 357px) {
+
+  .buttons {
+    height: 7.5vh;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 699px) {
+  .homeSection {
+    flex-direction: row-reverse; /* Coloca o cachorro em cima */
+    height: auto;
+    padding: 20px 0;
+    background-size: cover;
+    background-position: center;
+  }
+  .mobileContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    padding: 10px 10px;
+  }
+  .dog {
+    height: auto;
+    width: 50vw;
+    height: 60vh;
+    margin-top: 0;
+  }
+
+  .layoutContainer {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .Title {
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 10px;
+    color: #000;
+  }
+
+  .subTitle {
+    font-size: 16px;
+    color: #000;
+  }
+
+  .ButtonsLayout {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    display: flex;
+  }
+
+  .buttons {
+    width: 60vw;
+    height: 6.5vh;
+    font-size: 1rem;
+  }
+}
+
+
+
+@media (max-width: 521px) {
+  .Title{
+    margin-top: 0px;
+  }
+
+  .homeSection {
+    background-position: 31% 65%;
+  }
+  .dog {
+    height: auto;
+    width: 60vw;
+    height: 65vh;
+    margin-top: 0;
+  }
+
+}

@@ -1,0 +1,111 @@
+## Send OTP [/auth/send-otp]
+
+### Enviar OTP [POST]
+
+Gera e envia através de uma modal o código de segurança temporário (OTP).
+
+Essa API pode ser usada para **ATIVAR** um E-mail ou **ALTERAR** uma senha, usando o OTP.
+
+::: note
+Limite de acesso: Máxima de 5 tentativas, bloqueio de 120 segundos.
+:::
+
+::: note
+O OTP é válido por 15 minutos e só pode ser reenviado após 120 segundos.
+:::
+
+::: note
+Protegido pelo middleware `isAuth`.
+
+(OPCIONAL) O cabeçalho `authorization` poderá ser enviado no formato `Bearer <token>`, e o token autenticado é utilizado para **ATIVAR** o E-mail.
+:::
+
+::: warning
+Por hora, só existe a possibilidade de enviar o código de segurança via e-mail.
+:::
+
+### **Exemplo usando fetch**
+```javascript
+const URL = 'https://dev-diboaclub.onrender.com';
+const TOKEN = ''; // Deixe vazio para ALTERAR senha
+const EMAIL = 'teste1@email.com'; // Defina um email válido se não houver token
+
+if (!TOKEN && !EMAIL) {
+    console.error("Token ou email são obrigatórios.");
+} else {
+    fetch(URL + '/auth/send-otp', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            ... (TOKEN ? { authorization: `Bearer ${TOKEN}` } : {})
+        },
+        body: JSON.stringify(TOKEN ? {} : { email: EMAIL }), // Envia o email apenas se não houver token
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error(error);
+    });
+}
+```
+
++ Request Ativar E-mail
+
+    + Headers
+
+            Content-Type: application/json
+            authorization: Bearer <token>
+
+    + Body
+
+            { "email": "teste1@email.com" }
+
++ Request Alterar Senha (application/json)
+
+    + Body
+
+            { "email": "teste1@email.com" }
+
++ Response 200 (application/json)
+        
+    + body
+
+            {
+                "success": true,
+                "message": "Código de segurança enviado.",
+            }
+
++ Response 400 (application/json)
+    + Body
+
+            // Token ou Email inválido
+            { "success": false, "issues": "[]", "error": "Dados inválidos."}
+            { "success": false, "error": "Faltando E-mail ou Token."}
+
++ Response 401 (application/json)
+    + Body
+
+            // Usuário não encontrado
+
+            { "success": false, "error": "Usuário não autenticado", "logout": true }
+
++ Response 404 (application/json)
+    + Body
+
+            { "error": "Token não encontrado." }
+
+            // Email não encontrado
+            { "success": true, "error": "Código de segurança enviado." } 
+
++ Response 429 (application/json)
+    + body
+
+            { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+            { "error": "Aguarde <<tempo>> segundos para enviar um novo código de segurança." }
+
++ Response 500 (application/json)
+    + Body
+
+            { "error": "Erro inesperado." }

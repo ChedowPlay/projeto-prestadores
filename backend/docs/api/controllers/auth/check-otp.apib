@@ -1,0 +1,122 @@
+## Check OTP [/auth/check-otp]
+
+### Validar OTP/Alterar Senha [POST]
+
+Valida se o código OTP está correto.
+Se for para ativar o e-mail, ele será validado.
+Se for para alteração de senha, a senha será atualizada e um token de acesso (login) será gerado.
+
+::: note
+Limite de acesso: Máxima de 5 tentativas, bloqueio de 120 segundos.
+:::
+
+::: note
+Protegido pelo middleware `isAuth`.
+
+(OPCIONAL) O cabeçalho `authorization` poderá ser enviado no formato `Bearer <token>`, e o token autenticado é utilizado para **ATIVAR** o E-mail.
+:::
+
+::: warning
+O retorno 200 referece ao ato de **ATIVAR** email e o 201 ao ato de **ALTERAR** senha.
+:::
+
+### **Exemplo usando fetch**
+```javascript
+const URL = 'https://dev-diboaclub.onrender.com';
+const TOKEN = ''; // Insira um token válido para testar com autenticação
+const EMAIL = 'teste1@email.com'; // Insira um email válido para testar sem autenticação
+const OTP = '<<CODE>>'; // Código OTP a ser verificado
+const password = "<<PASSWORD>>";
+
+if (!TOKEN && !EMAIL) {
+    console.error("Token ou email são obrigatórios.");
+} else {
+    const bodyData = { otp: OTP };
+    if (!TOKEN) bodyData.email = EMAIL; // Adiciona o email apenas se não houver token
+    if (!TOKEN) bodyData.password = password; // Adiciona a senha se não houver token
+    
+    fetch(URL + '/auth/check-otp', {
+        method: 'POST',
+        headers: { 
+            "Content-Type": "application/json",
+            ...(TOKEN ? { authorization: `Bearer ${TOKEN}` } : {})
+        },
+        body: JSON.stringify(bodyData),
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error(error);
+    });
+}
+```
+
++ Request Ativar E-mail
+
+    + Headers
+
+            Content-Type: application/json
+            authorization: Bearer <token>
+
+    + Body
+
+            { "otp": "<<CODE>>" }
+
++ Request Alterar Senha (application/json)
+
+    + Body
+
+            { "otp": "<<CODE>>", "email": "<<EMAIL>>", "password": "<<PASSWORD>>"}
+
++ Response 200 (application/json)
+        
+    + body
+
+            { "success": true, "message": "E-mail validado com sucesso." }
+
++ Response 201 (application/json)
+
+    + body
+
+            { "success": true, "message": "Senha alterada com sucesso.", "token": "JWT.EXAMPLE.TOKEN" }
+
++ Response 400 (application/json)
+    + Body
+
+            // Token ou Email inválido
+            { "success": false, "issues": "[]", "error": "Dados inválidos."}
+            { "success": false, "error": "Faltando E-mail ou Token."}
+
++ Response 401 (application/json)
+    + Body
+
+            // Usuário não encontrado
+
+            { "success": false, "error": "Usuário não autenticado", "logout": true }
+
++ Response 404 (application/json)
+    + Body
+
+            { "error": "Token não encontrado." }
+
+            // Email não encontrado
+            { "success": true, "error": "Código de segurança enviado." } 
+
++ Response 429 (application/json)
+    + body
+
+            { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+            { "error": "Aguarde <<tempo>> segundos para enviar um novo código de segurança." }
+            { "success": false, "error": "A senha deve conter pelo menos 8 caracteres." }
+            { "success": false, "error": "A senha deve conter pelo menos uma letra minúscula." }
+            { "success": false, "error": "A senha deve conter pelo menos uma letra MAIÚSCULA." }
+            { "success": false, "error": "A senha deve conter pelo menos um número de 0 a 9." }
+            { "success": false, "error": "A senha deve conter pelo menos um caractere especial !@#$%¨:;^&*()[]{}/*-+|\\=<>" }
+            { "success": false, "error": "A senha é facilmente adivinhável." }
+
++ Response 500 (application/json)
+    + Body
+
+            { "error": "Erro inesperado." }

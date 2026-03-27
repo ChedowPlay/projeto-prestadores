@@ -1,0 +1,100 @@
+.customOrder {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+.wrapper {
+  display: flex;
+  justify-content: flex-end; 
+  padding-right: 100px;
+  padding-bottom: 40px;
+  z-index: 10;
+
+  @media (max-width: 1024px) {
+   justify-content: start;
+  }
+}
+
+.customPrice {
+  background-color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.customDropdown {
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  min-width: 200px;
+  z-index: 0;
+  right: 0; 
+  z-index: 10;
+
+  @media (max-width: 1024px) {
+    left: 0; 
+    right: auto;
+  }
+}
+
+.customCheckbox {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.customDropdown label {
+  display: block;
+  color: #000000 !important;
+  margin-right: 2px;
+}
+
+.customCheckbox label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative; 
+}
+
+
+.customCheckbox input {
+      width: 18px;
+      height: 18px;
+      color: black  !important;
+    }
+    .customCheckbox span{
+      color: black !important;
+    }
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  border-radius: 15px;
+}
+.buttonsCustomize {
+  background-color: #ffc466;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.buttonsCustomiz {
+  background-color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+@media (max-width: 414px) {
+  .customPrice {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    width: 150px;
+  }
+}

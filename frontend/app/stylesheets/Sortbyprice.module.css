@@ -1,0 +1,89 @@
+.rangeContainer {
+  position: relative;
+  width: 100%;
+  height: 50px;
+}
+
+.rangeTrack {
+  position: absolute;
+  width: 100%;
+  height: 6px;
+  background: #ff9800;
+  border-radius: 3px;
+}
+
+.rangeSlider {
+  position: absolute;
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+}
+
+.rangeSlider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px;
+  background: transparent;
+}
+
+.rangeSlider::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #ff9800;
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: auto;
+  margin-top: -7px;
+}
+
+.rangeValues {
+  position: absolute;
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.rangeValues span {
+  position: absolute;
+  transform: translateX(-50%);
+  top: 15px;
+  color: black;
+  font-weight: bold;
+}
+
+.priceInputs {
+  margin-top: 15px;
+}
+
+.sizePrice {
+  width: 340px;
+  padding-left: 20px;
+}
+
+
+@media (max-width: 1024px) {
+  .sizePrice {
+    width: 33%;
+    margin-top: 15px;
+  }
+  .border {
+    border: 2px solid #4e4e4e !important;
+    border-radius: 5px !important;
+  }
+  
+}
+@media (max-width: 720px) {
+  .sizePrice {
+    width: 100%;
+    padding-right: 15px;
+    padding-bottom: 10px;
+  }
+  .border {
+    border: 2px solid #4e4e4e !important;
+    border-radius: 5px !important;
+  }
+  
+}

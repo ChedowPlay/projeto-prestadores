@@ -1,0 +1,97 @@
+## Remove arquivo para o album [/api/provider/file]
+
+### Remover arquivo album [DELETE]
+
+Remove o arquivo do servidor
+
+::: note
+Limite de acesso: Máxima de 10 tentativas, bloqueio de 120 segundos.
+:::
+
+::: note
+Protegido pelo middleware `isAuth`.
+:::
+
+### *Sobre os limites*
+O sistema retorna um json personalizado indicando o **limite** que usuário tem para o plano e o **total** de video ou imagem enviado.
+
+```json
+{
+    "video": {
+        "limit": 3,
+        "total": 0
+    },
+    "image": {
+        "limit": 6,
+        "total": 6
+    }
+}
+```
+
+### **Exemplo usando fetch com formData**
+```javascript
+[...]
+
+request("DELETE", null, null, "ID_DO_ARQUIVO_AQUI"); // Deletar Arquivo
+```
+
++ Request Remover arquivo
+
+    + Headers
+
+            Content-Type: application/json
+            authorization: Bearer <token>
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "success": true,
+                "message": "Arquivo removido.",
+                "video": {
+                    "limit": 3,
+                    "total": 0
+                },
+                "image": {
+                    "limit": 6,
+                    "total": 2
+                }
+            }
+
++ Response 400 (application/json)
+    + Body
+
+            { "success": false, "error": "ID do arquivo não informado."}
+            {
+                "success": false,
+                "error": "Limite de imagens atingindo.",
+                "video": {
+                    "limit": 3,
+                    "total": 0
+                },
+                "image": {
+                    "limit": 6,
+                    "total": 6
+                }
+            }
+
++ Response 401 (application/json)
+    + Body
+
+            { "success": false, "error": "Usuário não autenticado", "logout": true }
+
++ Response 404 (application/json)
+    + Body
+
+            { "success": false, "error": "Arquivo não encontrado." }
+
++ Response 429 (application/json)
+    + body
+
+            { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + Body
+
+            { "success": false, "error": "Erro inesperado." }
+            { "success": false, "error": "Erro interno ao deletar arquivo." }

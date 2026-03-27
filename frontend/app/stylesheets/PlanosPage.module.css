@@ -1,0 +1,37 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.planOption {
+  border: 2px solid #dee2e6;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.planOption:hover {
+  border-color: #adb5bd;
+  background-color: #f8f9fa;
+}
+
+.selectedPlan {
+  border-color: var(--bs-primary) !important;
+  background-color: rgba(0, 143, 187, 0.05);
+}
+
+.selectedPlan .form-check-input:checked {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .planOption {
+    padding: 0.75rem !important;
+  }
+}

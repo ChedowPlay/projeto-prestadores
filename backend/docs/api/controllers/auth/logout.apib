@@ -1,0 +1,56 @@
+## Logout [/auth/logout]
+
+### Desconectar usuário [POST]
+
+Realiza o logout do usuário removendo o token de acesso do banco de dados.
+
+::: note
+Limite de acesso: Máxima de 5 tentativas, bloqueio de 120 segundos.
+:::
+
+::: note
+Protegido pelo middleware `isAuth`.
+
+O cabeçalho `authorization` deve ser enviado no formato `Bearer <token>`, e o token autenticado é utilizado para efetuar o logout.
+:::
+
+
++ Request Logout
+    + Headers
+
+            Content-Type: application/json
+            authorization: Bearer JWT.EXAMPLE.TOKEN
+
+    + Body
+            // O corpo deve estar vazio, pois o token é extraído do cabeçalho
+
++ Response 200
+    + Headers
+            Content-Type: application/json
+    + Body
+            {
+                "success": true,
+                "message": "Logout realizado com sucesso.",
+                "logout": true
+            }
+
++ Response 401 (application/json)
+    + Body
+            // Usuário não encontrado
+            { "success": false, "error": "Usuário não autenticado"}
+
++ Response 401 (application/json)
+    + Body
+            { "success": false, "error": "Usuário não autenticado", "logout": true }
+
++ Response 404 (application/json)
+    + Body
+            { "error": "Token não encontrado." }
+
++ Response 429 (application/json)
+    + body
+        { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + Body
+            { "error": "Erro inesperado." }

@@ -1,0 +1,162 @@
+## Provider Details [/api/provider]
+
+### Obter provider [GET]
+
+Obtenha informações detalhadas sobre o fornecedor logado.
+
+::: note
+Limite de acesso: Máxima de 35 tentativas, bloqueio de 120 segundos.
+:::
+
+::: note
+Protegido pelo middleware `isAuth`.
+:::
+
+
+### **Exemplo usando fetch**
+```javascript
+const URL = 'https://dev-diboaclub.onrender.com';
+const TOKEN = ''; // Defina o token se disponível
+const PROVIDER_ID = ''; // Defina o provider_id se necessário. Adicione "/" como inicial.
+
+const headers = { "Content-Type": "application/json" };
+
+// Se houver um token, adicione ao header; senão, use provider_id na URL
+if (TOKEN) { headers["authorization"] = `Bearer ${TOKEN}` }
+
+const endpoint = TOKEN ? '/api/provider' : `/api/provider${PROVIDER_ID}`;
+
+fetch(URL + endpoint, { method: 'GET', headers })
+.then(resp => resp.json())
+.then(data => {console.log(data); })
+.catch(error => {console.error(error); });
+```
+
+
++ Response 200
+    + Headers
+
+            Content-Type: application/json
+            authorization: Bearer <token>
+
+    + Body
+
+            {
+            "success": true,
+            "user_id": "753e8e7f-8b73-42d7-9313-61381581afe7",
+            "email": "atslind4@email.com"
+            "user_id": "d4511edf-41b1-4817-a7b3-47d4c6560d80",
+            "provider_id": "b7539c7c-184c-4afc-82ed-e90056fc6e1a",
+            "bio": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
+            "name": "Usuário Teste 1",
+            "phone": "123456789",
+            "whatsapp": "123456789",
+            "picture": "https://api.dicebear.com/9.x/initials/png?seed=Usuário Teste 1",
+            "created_at": "2025-03-04T20:23:05.729Z",
+            "price": {
+                "min": 51.55,
+                "max": 117.62,
+                "avg": 84.58500000000001
+            },
+            "works": {
+                "count": 2,
+                "data": [
+                {
+                    "work_id": "09daca56-a730-40e8-a98a-73e0b6cd3a12",
+                    "description": "Work 1 do teste1@email.com: Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
+                    "price": 51.55,
+                    "service": "Eletricista",
+                    "category": "Reparos e Manutenção"
+                },
+                {
+                    "work_id": "bdebf17b-c3f6-4a71-bdad-a56c02953c5e",
+                    "description": "Work 2 do teste1@email.com: Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
+                    "price": 117.62,
+                    "service": "Encanador",
+                    "category": "Reparos e Manutenção"
+                }
+                ]
+            },
+            "album": {
+                "count": 5,
+                "data": [
+                {
+                    "file_id": "4929ac1f-e496-4d7f-ae86-031b1ae3999f",
+                    "type": "image",
+                    "url": "https://picsum.photos/500/800"
+                },
+                {
+                    "file_id": "dc87b69b-bc24-43a2-ab8e-28f10ab0de6e",
+                    "type": "image",
+                    "url": "https://picsum.photos/500/800"
+                },
+                {
+                    "file_id": "f5518e68-cac7-42f7-a658-2e6af1302e9f",
+                    "type": "image",
+                    "url": "https://picsum.photos/500/800"
+                },
+                {
+                    "file_id": "93b6057c-76a2-4490-a87a-08535cff881a",
+                    "type": "image",
+                    "url": "https://picsum.photos/500/800"
+                },
+                {
+                    "file_id": "c7f81679-c9b9-40ee-b643-c0b38c237671",
+                    "type": "image",
+                    "url": "https://picsum.photos/500/800"
+                }
+                ]
+            },
+            "address": {
+                "cep": null,
+                "city": "Campo Grande",
+                "state": "MS",
+                "street": null,
+                "number": "123",
+                "latitude": "-20.524801",
+                "longitude": "-54.657841"
+            },
+            "plan": {
+                "has_plan": true,
+                "plan_id": "75440c58-ba35-4f4c-94aa-2ea4ee1acb58",
+                "name": "DI BOA",
+                "paid_at": "2025-03-17T11:15:57.816Z",
+                "has_paid": true,
+                "pay_at": "2025-04-17T23:54:10.000Z",
+                "price": 0.5,
+                "advantages": {
+                    "image": 0,
+                    "video": 0,
+                    "service": 3
+                }
+            },
+        }
+
++ Response 400 (application/json)
+    + Body
+
+        {
+        "success": false,
+        "issues": {
+            "code": "invalid_type",
+            "expected": "number",
+            "received": "nan",
+            "path": [
+            "price",
+            "max"
+            ],
+            "message": "Expected number, received nan",
+        },
+        "error": "Dados incorretos para consulta.",
+        }
+
++ Response 429 (application/json)
+    + body
+
+            { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + Body
+
+            { "success": false, "error": "Erro inesperado." }
+            { "success": false, "error": "Erro ao buscar prestadores." }

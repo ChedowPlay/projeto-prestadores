@@ -1,0 +1,22 @@
+
+
+.progress{
+  width: 100px;
+  height: 2px;
+}
+
+.steps{
+  display: flex;
+  justify-content: center;
+    align-items: flex-start;
+}
+
+.stepsItem{
+ padding: 10px;
+}
+
+.button{
+  margin-left: 5%;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}

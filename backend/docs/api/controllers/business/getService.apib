@@ -1,0 +1,52 @@
+## Get Service [/api/service]
+
+### Listar serviços [GET]
+
+Retorna uma lista de categorias ordenadas alfabeticamente, contendo os serviços também ordenados dentro de cada categoria.
+
+::: note
+Limite de acesso: Máxima de 25 tentativas, bloqueio de 120 segundos.
+:::
+
+::: warning
+O exemplo dado é uma representação simplificada da resposta.
+:::
+
++ Response 200 (application/json)
+    + Body
+
+        {
+            "Assistência Técnica": [
+                {
+                    "service_id": "26388206-e4fe-4b0a-893d-10c5bb622bec",
+                    "label": "Conserto de Eletrodomésticos",
+                    "value": 1
+                },
+                {
+                    "service_id": "3b9d3fb7-a08c-482d-a281-6f4fbe50eb6b",
+                    "label": "Conserto de Eletrônicos",
+                    "value": 2
+                },
+                {
+                    "service_id": "df45d968-bee4-4e78-b54e-554e07586869",
+                    "label": "Assistência de Computadores",
+                    "value": 3
+                },
+                {
+                    "service_id": "e31a8cc2-b6aa-4eb7-ac87-a4044f956e55",
+                    "label": "Conserto de Celulares",
+                    "value": 4
+                }
+            ],
+        }
+
++ Response 429 (application/json)
+    + body
+
+        { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + body
+    
+        { "error": "Erro inesperado." }
+        { "success": false, "error": "Erro ao buscar serviços." }

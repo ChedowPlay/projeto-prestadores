@@ -1,0 +1,97 @@
+## Excluir Works [/api/provider/work/{work_id}]
+
+### Excluir works [DELETE]
+
+Exclui um trabalho.
+
+::: note
+Limite de acesso: Máxima de 10 tentativas, bloqueio de 120 segundos.
+:::
+
+::: note
+Protegido pelo middleware `isAuth`.
+:::
+
+### **Exemplo usando fetch**
+```javascript
+// Script para testar a API de trabalhos (works)
+
+// Configuração base
+[...]
+
+// 4. Excluir um trabalho
+async function deleteWork(workId) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/provider/work/${workId}`, {
+      method: 'DELETE',
+      headers
+    });
+    const data = await response.json();
+    console.log('Trabalho excluído:', data);
+    return data;
+  } catch (error) {
+    console.error('Erro ao excluir trabalho:', error);
+  }
+}
+
+// Exemplos de uso:
+
+// Excluir um trabalho
+deleteWork("uuid-do-trabalho"); // Substitua pelo UUID real do trabalho
+```
+
++ Parameters
+    + work_id: `3893ed04-815d-450c-b7a2-9d8e18142e06` (string, required) - ID do trabalho a ser excluído
+
++ Request Deletar
+
+    + Headers
+
+            Content-Type: application/json
+            authorization: Bearer <token>
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "success": true,
+                "message": "Trabalho removido com sucesso."
+            }
+
++ Response 400 (application/json)
+    + Body
+
+        { "success": false, "error": "Usuário não é um prestador." }
+        {
+        "success": false,
+        "issues": {
+            "code": "invalid_type",
+            "expected": "number",
+            "received": "nan",
+            "path": [
+            "price",
+            "max"
+            ],
+            "message": "Expected number, received nan",
+        },
+        "error": "Dados inválidos.",
+        }
+        
++ Response 404 (application/json)
+    + Body
+
+            {
+                "success": false,
+                "error": "Trabalho não encontrado."
+            }
+
++ Response 429 (application/json)
+    + body
+
+            { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + Body
+
+            { "success": false, "error": "Erro inesperado." }
+            { "success": false, "error": "Erro ao buscar trabalhos." }

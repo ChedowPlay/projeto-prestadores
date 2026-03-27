@@ -1,0 +1,60 @@
+## Get Plan [/api/plan]
+
+### Listar planos [GET]
+
+Retorna uma lista dos planos, ordenado por valor.
+
+::: note
+Limite de acesso: Máxima de 25 tentativas, bloqueio de 120 segundos.
+:::
+
+::: warning
+O exemplo dado é uma representação simplificada da resposta.
+:::
+
++ Response 200 (application/json)
+    + Body
+
+        [
+            {
+                "plan_id": "4b90726b-9e7c-4ec3-8649-f8619e6f8a58",
+                "name": "DI BOA",
+                "price": 89.90,
+                "advantages": {
+                "image": 0,
+                "video": 0,
+                "service": 3
+                }
+            },
+            {
+                "plan_id": "04d89cb7-79cf-4966-96ed-05b6b2488183",
+                "name": "MEGA DI BOA",
+                "price": 159.9,
+                "advantages": {
+                "image": 6,
+                "video": 3,
+                "service": 5
+                }
+            },
+            {
+                "plan_id": "7b62b9fb-d257-48e5-89c9-b0ddc446cd44",
+                "name": "DI BOA TOTAL",
+                "price": 249.9,
+                "advantages": {
+                "image": 30,
+                "video": 15,
+                "service": 10
+                }
+            }
+            ]
+
++ Response 429 (application/json)
+    + body
+
+        { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + body
+    
+        { "error": "Erro inesperado." }
+        { "success": false, "error": "Erro ao buscar serviços." }

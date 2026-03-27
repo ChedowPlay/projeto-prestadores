@@ -1,0 +1,80 @@
+## Complaints [/api/interactions/complaint]
+
+### Listar denúncias [GET]
+
+Retorna uma lista de denúncias registradas pelo usuário autenticado.
+
+::: note
+Protegido pelo middleware `isAuth`.
+:::
+
+::: note
+Limite de acesso: Máxima de 20 tentativas, bloqueio de 120 segundos.
+:::
+
+### **Exemplo usando fetch**
+```javascript
+const URL = 'https://dev-diboaclub.onrender.com';
+const TOKEN = 'JWT.EXAMPLE.TOKEN';
+
+fetch(URL + '/api/interactions/complaint', {
+    method: 'GET',
+    headers: { 
+        "Content-Type": "application/json", 
+        "authorization": `Bearer ${TOKEN}`
+    }
+})
+.then(resp => resp.json())
+.then(data => {
+    console.log(data);
+})
+.catch(error => {
+    console.error(error);
+});
+```
+
++ Request Listar denúncias
+    + Headers
+
+            Content-Type: application/json
+            authorization: Bearer <token>
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "success": true,
+                "complaints": [
+                    {
+                        "complaint_id": "xxx.xxx.xxx",
+                        "description": "Serviço não realizado conforme acordado",
+                        "provider_id": "xxx.xxx.xxx",
+                    }
+                ]
+            }
+
++ Response 400 (application/json)
+    + Body
+
+            { "success": false, "error": "Dados inválidos." }
+
++ Response 401 (application/json)
+    + Body
+
+            // Usuário não encontrado
+            { "success": false, "error": "Usuário não autenticado", "logout": true }
+
++ Response 404 (application/json)
+    + Body
+
+            { "error": "Token não encontrado." }
+
++ Response 429 (application/json)
+    + body
+
+            { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + Body
+
+            { "error": "Erro inesperado." }

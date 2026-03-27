@@ -1,0 +1,83 @@
+## Get Location [/api/location]
+
+### Listar Estados e Ciades [GET]
+Retorna uma lista de Estados e Cidades cadastrados no sistema.
+
+O cadastro é automatizado conforme os usuários criam contas, seguindo o padrão: Estado como UF (2 caracteres) e Cidade como nome (até 64 caracteres).
+
+::: note
+Limite de acesso: Máxima de 25 tentativas, bloqueio de 120 segundos.
+:::
+
+::: warning
+O exemplo dado é uma representação simplificada da resposta.
+:::
+
+**APIs de referência do IBGE para Estados e Cidades:**
+- Retorna todos os Estados do Brasil: [Exemplo de prático](https://servicodados.ibge.gov.br/api/v1/localidades/estados)
+- Retorna todas as Cidades do Brasil: [Exemplo de prático](https://servicodados.ibge.gov.br/api/v1/localidades/estados/MS/distritos)
+- Documentação: [Distritos por UF](https://servicodados.ibge.gov.br/api/docs/localidades#api-Distritos-estadosUFDistritosGet)
+
++ Response 200 (application/json)
+
+    + Body
+
+        {
+        "MS": [
+            {
+            "label": "Campo Grande",
+            "value": 1
+            },
+            {
+            "label": "Coxim",
+            "value": 2
+            }
+        ],
+        "SC": [
+            {
+            "label": "Florianópolis",
+            "value": 3
+            }
+        ],
+        "SP": [
+            {
+            "label": "São Paulo",
+            "value": 4
+            }
+        ],
+        "RJ": [
+            {
+            "label": "Rio de Janeiro",
+            "value": 5
+            }
+        ],
+        "CE": [
+            {
+            "label": "Campo Grande",
+            "value": 6
+            }
+        ],
+        "AM": [
+            {
+            "label": "Manaus",
+            "value": 7
+            }
+        ],
+        "DF": [
+            {
+            "label": "Brasília",
+            "value": 8
+            }
+        ]
+        }
+
++ Response 429 (application/json)
+    + body
+
+        { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + body
+    
+        { "error": "Erro inesperado." }
+        { "success": false, "error": "Erro ao buscar serviços." }

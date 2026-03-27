@@ -1,0 +1,147 @@
+## Envia arquivo para o album [/api/provider/file]
+
+### Enviar arquivo album [POST]
+
+Semelhante ao envio de foto de perfil, esse sistema permite o envio de foto ou video para o album do usuário prestador.
+
+Permite enviar apenas um arquivo.
+
+::: warning
+⚠ Essa API ainda não foi totalmente testada.
+:::
+
+::: note
+Limite de acesso: Máxima de 10 tentativas, bloqueio de 120 segundos.
+:::
+
+::: note
+Protegido pelo middleware `isAuth`.
+:::
+
+::: note
+Limite máximo de upload: 100mb. Tamanho máximo do arquivo: 100mb.
+:::
+
+::: warning
+Não utilize o ``Content-Type: application/json`` no header dessa API. Não há necessidade de uso de Content-Type!
+:::
+
+::: warning
+Utilize o método FormData para o envio de arquivos.
+:::
+
+Os tipos ``type`` podem ser ``video`` ou ``image``.
+
+Ao enviar o arquivo, ele será reconhecido e salvo na respectiva pasta.
+
+### *Sobre os limites*
+O sistema retorna um json personalizado indicando o **limite** que usuário tem para o plano e o **total** de video ou imagem enviado.
+
+```json
+{
+    "video": {
+        "limit": 3,
+        "total": 0
+    },
+    "image": {
+        "limit": 6,
+        "total": 6
+    }
+}
+```
+
+### **Exemplo usando fetch com formData**
+```javascript
+const BASE_URL = "https://dev-diboaclub.onrender.com";
+const API_URL = "/api/provider/file";
+const TOKEN = "JWT.EXAMPLE.TOKEN"; // Substitua pelo token válido
+
+async function request(method, fileUrl = null, fileName = null, fileId = null) {
+    const options = {
+        method,
+        headers: { "authorization": `Bearer ${TOKEN}` },
+    };
+
+    if (fileUrl) {
+        const formData = new FormData();
+        const response = await fetch(fileUrl);
+        const blob = await response.blob();
+        formData.append("file", blob, fileName);
+        options.body = formData;
+    }
+
+    if (fileId) options.method = "DELETE";
+
+    const response = await fetch(BASE_URL + API_URL + (fileId ? `/${fileId}` : ""), options);
+    const data = await response.json();
+    console.log(`✅ ${method} ->`, data);
+}
+
+// Escolha a função comentando/descomentando
+request("POST", "https://picsum.photos/1024/1024.jpg", "example.jpg"); // Upload de Imagem
+// request("POST", "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4", "example.mp4"); // Upload de Vídeo
+// request("DELETE", null, null, "ID_DO_ARQUIVO_AQUI"); // Deletar Arquivo
+```
+
++ Request Enviar arquivo
+
+    + Headers
+
+            Content-Type: application/json
+            authorization: Bearer <token>
+
+    + Body
+
+            { "file": BLOB_ARQUIVO }
+
++ Response 201 (application/json)
+        
+    + body
+
+            {
+                "success": true,
+                "message": "Postagem realizada.",
+                "video": {
+                    "limit": 3,
+                    "total": 0
+                },
+                "image": {
+                    "limit": 6,
+                    "total": 3
+                },
+                "url": "LINK.ALBUM.COM/media/album/TIPO/CODIGOARQUIVO.extensão",
+                "file_id": "xxx.xx.xxx",
+                "type": "image",
+            }
+
++ Response 400 (application/json)
+    + Body
+
+            { "success": false, "error": "Usuário não é um prestador."}
+            { "success": false, "error": "Erro no upload do arquivo."}
+
++ Response 401 (application/json)
+    + Body
+
+            { "success": false, "error": "Usuário não autenticado", "logout": true }
+
++ Response 404 (application/json)
+    + Body
+
+            { "error": "Token não encontrado." }
+
++ Response 413 (application/json)
+    + body
+
+            { "error": "O tamanho do arquivo excede o limite permitido." }
+
++ Response 429 (application/json)
+    + body
+
+            { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + Body
+
+            { "error": "Erro inesperado." }
+            { "error": "Erro interno ao salvar arquivo." }

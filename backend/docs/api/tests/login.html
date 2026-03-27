@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- SDK do Facebook -->
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '989412329818604',
+                xfbml: true,
+                version: 'v22.0'
+            });
+        };
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+
+        .google-btn,
+        .facebook-btn,
+        .login-btn {
+            border: none;
+        }
+
+        .google-btn {
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .facebook-btn {
+            background-color: #1877f2;
+            color: white;
+        }
+
+        .login-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Login</h2>
+
+    <!-- Formulário de Login via Credenciais -->
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" required />
+        </div>
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input type="password" id="password" required />
+            <button type="button" id="togglePassword">Ver Senha</button>
+        </div>
+        <button type="submit" class="login-btn">Entrar</button>
+    </form>
+
+    <!-- Botão customizado para Google Sign-In -->
+    <div id="googleSignInButton"></div>
+
+    <!-- Botão para Login com Facebook -->
+    <button onclick="handleFacebookSignIn()" class="facebook-btn">
+        Continuar com Facebook
+    </button>
+
+    <script>
+        const API_URL = 'http://192.168.100.106:3001';
+
+        // Toggle password visibility
+        document.getElementById("togglePassword").addEventListener("click", function () {
+            const passwordInput = document.getElementById("password");
+            passwordInput.type = (passwordInput.type === "password") ? "text" : "password";
+        });
+
+        // Login via credenciais
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const response = await fetch(`${API_URL}/auth/signin`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: document.getElementById('email').value,
+                        password: document.getElementById('password').value,
+                        accessProvider: 'credentials'
+                    })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    alert('Login realizado com sucesso!');
+                    localStorage.setItem('token', data.token);
+                    // Redirecionar ou atualizar a UI conforme necessário
+                } else {
+                    alert(data.error || 'Erro ao fazer login');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro ao fazer login');
+            }
+        });
+
+        // Google Sign-In
+        function handleCredentialResponse(response) {
+            console.log("Token do Google:", response.credential);
+            fetch(`${API_URL}/auth/signin`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    accessProvider: 'google',
+                    accessToken: response.credential
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Login realizado com sucesso!');
+                        localStorage.setItem('token', data.token);
+                        // Redirecionar ou atualizar a UI conforme necessário
+                    } else {
+                        alert(data.error || 'Erro ao fazer login');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao fazer login');
+                });
+        }
+
+        // Inicializa Google Identity Services
+        window.onload = function () {
+            google.accounts.id.initialize({
+                client_id: "208829339368-6ng0v1682dvtmq948qhtbtf9v13vl2c6.apps.googleusercontent.com",
+                callback: handleCredentialResponse
+            });
+            google.accounts.id.renderButton(
+                document.getElementById("googleSignInButton"),
+                { theme: "outline", size: "large" }
+            );
+        };
+
+        // Facebook Sign-In
+        function handleFacebookSignIn() {
+            FB.login(function (response) {
+                if (response.authResponse) {
+                    const accessToken = response.authResponse.accessToken;
+                    fetch(`${API_URL}/auth/signin`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            accessProvider: 'facebook',
+                            accessToken
+                        })
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Login realizado com sucesso!');
+                                localStorage.setItem('token', data.token);
+                                // Redirecionar ou atualizar a UI conforme necessário
+                            } else {
+                                alert(data.error || 'Erro ao fazer login');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Erro:', error);
+                            alert('Erro ao fazer login');
+                        });
+                } else {
+                    alert('Login com Facebook não autorizado ou cancelado.');
+                }
+            }, { scope: 'public_profile,email' });
+        }
+    </script>
+</body>
+
+</html>

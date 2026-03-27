@@ -1,0 +1,91 @@
+## Criar checkout de pagamento [/api/payment/send]
+
+### Enviar Payment [POST]
+
+Cria um payment de plano de negócio utilizando a API do MercadoPago, retornando as URLs para o ambiente de produção e **sandbox**.
+
+**sandbox:** Feito para testar a API em ambiente de desenvolvimento, use para realizar pagamentos falsos. Para isso, utilize os [Cartões Teste do MP](https://www.mercadopago.com.br/developers/pt/docs/subscriptions/additional-content/your-integrations/test/cards).
+
+::: note
+Limite de acesso: Máxima de 10 tentativas, bloqueio de 120 segundos.
+:::
+
+::: note
+Protegido pelo middleware `isAuth`.
+:::
+
+
+### **Exemplo usando fetch**
+```javascript
+const URL = "https://dev-diboaclub.onrender.com";
+const TOKEN = "JWT.EXAMPLE.TOKEN";
+
+fetch(URL + "/api/payment/send", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${TOKEN}`
+  },
+  body: JSON.stringify({
+    plan_id: "5371a040-4d50-4127-a11a-eedab988f737"
+  })
+})
+  .then(response => response.json())
+  .then(data => console.log("Resposta do payment:", data))
+  .catch(error => console.error("Erro:", error));
+```
+
++ Request Criar checkout de pagamento
+
+    + Headers
+
+        Content-Type: application/json
+        Authorization: Bearer <token>
+    
+    + Body
+    
+        {
+            "plan_id": "UUID do plano"
+        }
+
++ Response 200 (application/json)
+    + Body
+
+        {
+            "success": true,
+            "message": "Payment criado com sucesso.",
+            "checkout": "https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "sendbox": "https://sandbox.mercadopago.com.br/checkout/v1/redirect?pref_id=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "plan": {
+                "plan_id": "UUID do plano",
+                "name": "Nome do plano",
+                "price": 100.00
+        }
+
++ Response 400 (application/json)
+    + body
+
+        {
+            "success": false,
+            "error": "Dados inválidos.",
+            "issues": { /* Detalhes do erro de validação */ }
+        }
+
++ Response 404 (application/json)
+    + body
+
+        {
+            "success": false,
+            "error": "Plano não encontrado."
+        }
+
++ Response 429 (application/json)
+    + body
+
+        { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + body
+    
+        { "success": false, "error": "Erro ao criar payment." }
+        { "success": false, "error": "Erro inesperado." }

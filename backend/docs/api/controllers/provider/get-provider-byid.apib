@@ -1,0 +1,131 @@
+## Provider Details [/api/provider/{provider_id}]
+
+### Obter provider by id [GET]
+
+Obtenha informações detalhadas sobre um fornecedor específico usando id.
+
+::: note
+Limite de acesso: Máxima de 35 tentativas, bloqueio de 120 segundos.
+:::
+
+
+### **Exemplo usando fetch**
+```javascript
+const URL = 'https://dev-diboaclub.onrender.com';
+const PROVIDER_ID = ''; // Defina o provider_id se necessário. Adicione "/" como inicial.
+
+const headers = { "Content-Type": "application/json" };
+
+const endpoint = `/api/provider/${PROVIDER_ID}`;
+
+fetch(URL + endpoint, { method: 'GET', headers })
+.then(resp => resp.json())
+.then(data => {console.log(data); })
+.catch(error => {console.error(error); });
+```
+
+
++ Parameters
+    + provider_id: `123e4567-e89b-12d3-a456-426614174000` (string, required) - Provider UUID
+
++ Response 200 (application/json)
+    + Body
+
+    {
+        "success": true,
+        "provider_id": "b7539c7c-184c-4afc-82ed-e90056fc6e1a",
+        "bio": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
+        "name": "Usuário Teste 1",
+        "phone": "123456789",
+        "whatsapp": "123456789",
+        "picture": "https://api.dicebear.com/9.x/initials/png?seed=Usuário Teste 1",
+        "created_at": "2025-03-04T20:23:05.729Z",
+        "price": {
+            "min": 51.55,
+            "max": 117.62,
+            "avg": 84.58500000000001
+        },
+        "works": {
+            "count": 2,
+            "data": [
+            {
+                "work_id": "09daca56-a730-40e8-a98a-73e0b6cd3a12",
+                "description": "Work 1 do teste1@email.com: Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
+                "price": 51.55,
+                "service": "Eletricista",
+                "category": "Reparos e Manutenção"
+            },
+            {
+                "work_id": "bdebf17b-c3f6-4a71-bdad-a56c02953c5e",
+                "description": "Work 2 do teste1@email.com: Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
+                "price": 117.62,
+                "service": "Encanador",
+                "category": "Reparos e Manutenção"
+            }
+            ]
+        },
+        "album": {
+            "count": 5,
+            "data": [
+            {
+                "file_id": "4929ac1f-e496-4d7f-ae86-031b1ae3999f",
+                "type": "image",
+                "url": "https://picsum.photos/500/800"
+            },
+            {
+                "file_id": "dc87b69b-bc24-43a2-ab8e-28f10ab0de6e",
+                "type": "image",
+                "url": "https://picsum.photos/500/800"
+            },
+            {
+                "file_id": "f5518e68-cac7-42f7-a658-2e6af1302e9f",
+                "type": "image",
+                "url": "https://picsum.photos/500/800"
+            },
+            {
+                "file_id": "93b6057c-76a2-4490-a87a-08535cff881a",
+                "type": "image",
+                "url": "https://picsum.photos/500/800"
+            },
+            {
+                "file_id": "c7f81679-c9b9-40ee-b643-c0b38c237671",
+                "type": "image",
+                "url": "https://picsum.photos/500/800"
+            }
+            ]
+        },
+        "address": {
+            "city": "Campo Grande",
+            "state": "MS",
+            "street": null
+        }
+    }
+
++ Response 400 (application/json)
+    + Body
+
+        {
+        "success": false,
+        "issues": {
+            "code": "invalid_type",
+            "expected": "number",
+            "received": "nan",
+            "path": [
+            "price",
+            "max"
+            ],
+            "message": "Expected number, received nan",
+        },
+        "error": "Dados incorretos para consulta.",
+        }
+
++ Response 429 (application/json)
+    + body
+
+            { "error": "Muitas solicitações, aguarde <<tempo>> segundos" }
+
++ Response 500 (application/json)
+    + Body
+
+            { "success": false, "error": "Erro inesperado." }
+            { "success": false, "error": "Erro ao buscar prestadores." }

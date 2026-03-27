@@ -1,0 +1,23 @@
+@import "./buttons.css";
+@import "./boostrapplus.css";
+@import "./banner.css";
+@import "./SearchBar.css";
+@import "./Searched.css";
+@import "./Filters.css";
+@import "./Cards.css";
+@import "./AboutSection.css";
+
+/* COLORS for usage in colors.js */
+.c1 {
+  background-color: #008fbb;
+}
+
+.c2 {
+  background-color: #ffc466;
+}
+
+.white {
+  background-color: white;
+}
+
+

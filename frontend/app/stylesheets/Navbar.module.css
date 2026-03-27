@@ -1,0 +1,208 @@
+/* Web */
+.page{
+    margin: 0px;
+    padding: 0px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 85px;
+    background-color: #fff;
+    margin-top: -9px;
+}
+
+.hamburger, .closeMenu, .separator, .userCircle {
+    display: none; 
+}
+
+.container {
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: space-between;
+    /* padding-top: 7vh; */
+    padding-left: 3vw;
+    background: #FFFFFF;
+    width: 100%;
+    z-index: 1000;
+    height: 85px;
+   
+}
+
+.container_login {
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 7vw;
+    background: #FFFFFF;
+    width: 150%;
+    height: 85px;
+    font-size: 15px;
+    top:0px;
+}
+
+
+.nav {
+    margin-top: 3vh;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 500;
+    gap: 7vh;
+    list-style: none;
+    margin-right: 35px;
+    height: 85px;
+    width: 98%;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.navButtonCadastrar {
+    margin-left: -30px;
+    font-weight: 500;
+    height: 6vh;
+    width: 7vw;
+}
+
+.navButtonLogin {
+    height: 6vh;
+    width: 7.8vw;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+ .logo_DiBoa {
+    margin-left: 20px;
+    width: 3.2vw;
+    height: 13vh;
+}
+
+.logo_DiBoa_login {
+    max-width: 100px;
+    height: auto;
+    margin-left: 50px;
+   
+}
+
+.userSection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Tablet */
+@media (max-width: 1023px) {
+    /* .logo_DiBoa {
+        max-width: 85px;
+        margin-top: 3vh;
+        margin-left: 5vw;
+        margin-right: auto;
+        display: block;
+    } */
+
+    .userCircle {
+    
+        display: flex;
+        margin-right: 30px;
+        
+    }
+
+    .hamburger {
+        display: block;
+        border: none;
+        background: none;
+        cursor: pointer;
+        padding: 0;
+        font-size: 33px;
+        margin-right: 35px;
+    }
+
+    .navCollapse {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 50vw;
+        height: 100%;
+        background: #FFFFFF;
+        padding: 3vw;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+        z-index: 1050;
+    }
+
+    .navCollapse.show {
+        display: flex;
+    }
+
+    .nav {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 2vw;
+        margin-top: 8vh;
+        width: 100%;
+    }
+
+    .separator {
+        display: flex;
+        width: 100%;
+        height: 1px;
+        background: #C7C7C7;
+        margin-bottom: 2vh;
+    }    
+
+    .navButtonLogin, .navButtonCadastrar, .navButtonSair {
+        margin-left: 5vw;
+        width: 44vw;
+        left: 0;
+    }
+
+    .closeMenu {
+        display: block;
+        font-size: 30px;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #737373;
+    }
+}
+
+/* Mobile */
+@media screen and (max-width: 768px) {
+    .navCollapse {
+        width: 100%;
+        
+    }
+
+    .nav {
+        gap: 2vh;
+    }
+    
+    .navButtonCadastrar, .navButtonLogin, .navButtonSair {
+        margin-left: 5vw;
+        width: 90vw;
+    }
+
+    .logo_DiBoa {
+        width: 45px;
+    }
+}
+@media screen and (max-width: 900px) {
+
+    .logo_DiBoa {
+        width: 47px;
+    }
+}
+

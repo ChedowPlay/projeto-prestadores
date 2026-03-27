@@ -1,0 +1,80 @@
+/* Web
+html {
+    scroll-behavior: smooth;
+}
+  
+body {
+    margin: 0;
+    padding: 0;
+  }
+   */
+#explorar {
+  margin-top: 30px;
+  min-height: 30vh;
+  scroll-margin-top: 10px;
+  position: relative;
+}
+
+#home {
+  padding-bottom: 20px;
+}
+
+
+
+.section:first-of-type {
+  scroll-margin-top: 100px;
+}
+
+.responsive {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-items: flex-start;
+  margin-top: 10px;
+
+}
+
+@media (max-width: 720px) {
+  .responsive {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .section {
+    min-height: 30vh;
+    scroll-margin-top: 100px;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 768px) {
+  .section {
+    padding: 10px 0;
+    min-height: 40vh;
+    scroll-margin-top: 80px;
+  }
+
+  /* Mobile */
+  @media screen and (max-width: 768px) {
+    .section {
+      padding: 10px 0;
+      min-height: 50vh;
+      scroll-margin-top: 80px;
+    }
+
+    #explorar {
+      padding: 20px 0;
+      min-height: auto; /* Ou um valor específico */
+      margin-top: 0;
+    }
+  }
+  @media screen and (max-width: 517px) {
+    .explorar {
+      margin-top: 100px;
+    }
+  }
+}

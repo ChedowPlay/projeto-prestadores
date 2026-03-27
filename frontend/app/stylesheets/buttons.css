@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'Avenir';
+  src: url('../fonts/AvenirLTStd-Heavy.otf') format('otf');
+}
+
+.button-secondary {
+  width: fit-content;
+  height: 35px;
+  border-radius: 10px;
+  border-width: 2px;
+  border-style: solid;
+  font-weight: bold;
+  margin: 0px 5px 0px 5px;
+}

@@ -1,0 +1,15 @@
+.responsive {
+  display: flex;
+  flex-wrap: wrap; 
+  align-items: center;
+  align-items: flex-start;
+  margin-top: 10px; 
+  
+}
+@media (max-width: 720px) {
+  .responsive {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+}

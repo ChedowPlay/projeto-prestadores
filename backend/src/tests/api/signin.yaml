@@ -1,0 +1,28 @@
+config:
+  # target: "https://aquitempeixe.com.br/"
+  target: "http://192.168.100.106:3001"
+  phases:
+    - duration: 30
+    - arrivalRate: 5
+  variables:
+    # email: "user@test.com"
+    # senha: "UserTest@159"
+    email: "tha@email.com"
+    senha: "Senha*123"
+
+scenarios:
+  - name: "Acessar conta de usuário"
+    flow:
+      - post:
+          url: "/api/signin"
+          headers:
+            Content-Type: 'application/json'
+          json:
+            email: '{{ email }}'
+            senha: '{{ senha }}'
+          # capture:
+          #   - json: $.token
+          #     as: token
+          expect:
+            - statusCode: 200
+      - think: 1

@@ -1,0 +1,10 @@
+.git\
+node_modules\
+docs\
+nginx\
+.env
+.env.example
+banco.sqlite
+bancoTeste.sqlite
+README.md
+serverlog.log

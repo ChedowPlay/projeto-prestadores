@@ -1,0 +1,147 @@
+FORMAT: 1A
+HOST: https://dev-diboaclub.onrender.com
+
+# diboa club
+
+Documentação oficial da API do sistema **diboa club**
+
+Versão da documentação: `1.0250317V`.
+
+17 03 2025.
+
+---
+
+## Sobre
+
+1. URL base: `https://dev-diboaclub.onrender.com`
+1. Todas as APIs estão disponíveis em `/api/`, `/auth/` ou `/`.
+1. O url base pode variar de acordo com o ambiente de desenvolvimento e de produção.
+1. Os IDs das entidades são strings.
+1. Quando houver mais de uma resposta no body, significa que há a possibilidade de retornar uma dessas opções
+1. Link para poder acessar o diagrama do banco de Dados
+<button onclick="location.href='https://www.plantuml.com/plantuml/svg/jLZVSbEt4xxtK-mmluialpgn0w6G0OeXuK_R2Mb8sWk6CUkZjQr1HpgLzZWnXAi-2TCB7e3f4_Z5gdCiM_RfCHv8kBFqhJxjVgjToUUXOxISfwgXgC_01gmS31c4j9ImDBh1aXN1WOH71k6nodlGX4Ue4mE2GA0mhj7mYmUa1R39eE1f001iRVrw-FJmwA2pjLMEMs1oE89cqxoFuxOVNfR3zWo-dCATZ3GwQ1SpKul0UlJYjFCoS3RzEB64JAABlBMr3q_9aauafgJP0EPiKcIP6DXWx952IAn4WK3fvfmXpyJNC23dgEIxAilPsVC35mXmycdojm5KX3pvR2KMOdNUjUx2ngtM9YH3j9WmMTS8GVr-UF9oyjUBOddxzaxhvivkQtUlGLfCbVKI0scMF8ORkVFhRi1KfNlt7XlD26SkdtoqqZnui31jaL4p5S8UMtACmjXWq6nEDuQ2hIl5FXJkmwlZNrwNBaxz-ZzeJ6aVHcWBbpVQktSsGHlMkLB181iQlMYnjmclpewU_tPs-BfgYSwT6oiMwRpriyxBP_vNv0tcbA9KqVQctteLitJTqhgR32bvItw7dZ6AK8EWFkQAD_ge7Cs3EXyYEyoo9RTdNig4SqlTt5OsdtEzmKnk2vbGZz1k9oRTkRjziIErP8dAxMHwy9CZ4lV_zxxGThjGyCERAds6F8pyU-tTo5y4DdSreGKlxynO4idZE7txrcpUCJBL0vQ8wn2TfpsoDNiePCcve3h8wC4g39Kovrr7r4KXB3dttsImpMCkbXBNHU_Z0JATofJg1S74IyBTpCeH9kFkiL4o6QzA-F8Q9fkwRkvetVaGf8Y_w4qmZAqd6WOezfG5w8EluraPPzQCf5WgvOwc2xEwLCEAcd8D_bIB-Ob7ArNLaoOcRNVlzZpcDElwnIEPa2U89fvxTJtBzH9vgt7HI5SRVhtgFTJwUsU7pLlI2wavBSVmyn-daA6D_TRD6-wFOegKxRcQkfBkAdbBZA1AukBPTcwfHSVQkiYa9LSHuChQ6CuMxv_9Po47vMjWH5RsPH8kloQqM-bS7cIcD6C7IgQIoQCtvvWdzBvYcYaVOmTRTwloUOFh4ozA5rpQ1wbvuukgpHclhbvVAbgGJue2w4koC0WF3s4WCnRIN37PkKZfvEC55FLlN2djCj0tN9q_ENA01GMcOA2q4WHe_ypboBYgn8LRApKEhMUTpZpElCwaytGZ6nesFqpzhJuPrjrzmQnw0qUQQyZ2kR5l5yjx-h8J16KJd7mo3ZROOW_LqBZDgbZ5wcyLAnZ5Pli5GGMvnCgCfT5BWiMTPE8L5oRlgTW3MzUgL72qLYoMcN5BgbML2gjNYvKWqy3OyPgJ9LbLtg5NZZ6667oGtnXaJGmnokyQG8p0f9b2gNaXWXDA5AP5C_w7uZKLkYNS1qno5vyP7ehdTW6Uex5lJ--v7kgg3dClhbORDHrzNJrSfvPz71ahkVumF9c2DVqphFhQUmfYt7CEiShiEfwT2dLjPCSUC0u8JexYQP4f3WXesiV15TVw29MnvCeBfIf2GLudG7nZ1eir3ypw_vvxzPRh-c0qAwC9jtsOAWEBKx4pp-okeFdid_hbPV7D8xoRAhFXfLcTlup_3sgMn1FQcEOpGgjNBVQ8nkp--s2AhoknoNiaCiJzfAg3BZrKy4Ierii8htOdx1yzMkp9_lG-92sAZrJ_0W00'" type="button">Abrir diagrama do banco</button>
+
+## Testes
+
+**Tabela de usuários testes**
+
+> Password: Teste@129
+
+| Name             | Email             | Role        |
+| ---------------- | ----------------  | ----------- |
+| Usuário Teste 1  | teste1@email.com  | Prestador   |
+| Usuário Teste 2  | teste2@email.com  | Prestador   |
+| Usuário Teste 3  | teste3@email.com  | Contratante |
+| Usuário Teste 4  | teste4@email.com  | Contratante |
+| Usuário Teste 5 (Não possui jobs) | teste5@email.com  | Prestador   |
+| Usuário Teste 6  | teste6@email.com  | Prestador   |
+| Usuário Teste 7  | teste7@email.com  | Prestador   |
+| Usuário Teste 8  | teste8@email.com  | Prestador   |
+| Usuário Teste 9  | teste9@email.com  | Prestador   |
+| Usuário Teste 10 | teste10@email.com | Prestador   |
+| Usuário Banido   | banido@email.com  | Prestador   |
+
+**Tabela de localizações**
+
+| Name            | Latitude   | Longitude  | City           | State |
+| --------------- | ---------- | ---------- | -------------- | ----- |
+| Usuário Teste 1 | -20.524801 | -54.657841 | Campo Grande   | MS    |
+| Usuário Teste 2 | -20.522345 | -54.655432 | Coxim          | MS    |
+| Usuário Teste 3 | -20.526789 | -54.659876 | Belo Horizonte | MG    |
+| Usuário Teste 4 | -20.520123 | -54.653210 | Curitiba       | PR    |
+| Usuário Banido  | -20.523456 | -54.656789 | Salvador       | BA    |
+| Usuário Teste 5 | -20.522756 | -54.653810 | Florianópolis  | SC    |
+| Usuário Teste 6 | -23.550520 | -46.633308 | São Paulo      | SP    |
+| Usuário Teste 7 | -22.906847 | -43.172897 | Rio de Janeiro | RJ    |
+| Usuário Teste 8 | -3.731862  | -38.526670 | Campo Grande   | CE    |
+| Usuário Teste 9 | -27.594870 | -48.548219 | Manaus         | AM    |
+| Usuário Teste 10| -15.799890 | -47.864140 | Brasília       | DF    |
+
+## Headers
+
+É necessário informar o Content-Type no header da requisição:
+Exemplo para a maioria das APIs:
+```
+{
+ "Content-Type": "application/json" 
+}
+```
+Exemplo para APIs que solicitam o token de acesso:
+```
+{
+ "Content-Type": "application/json",
+ "authorization": "Bearer <<token>>"
+}
+```
+Exemplo para APIs que permitem o envio de arquivos:
+```
+{
+ "Content-Type": "multipart/form-data"
+ "authorization": "Bearer <<token>>"
+}
+```
+
+## Env
+
+env do backend
+
+```
+VERSION=1.0250317
+
+
+# SERVIDOR
+PORT=3001
+HOST=""
+URL=null # Se tiver "https://www.site.com.br:443", ou "null"
+
+
+# GERAL
+DEBUG=true # false se for para rodar em produção
+CLUSTERIZE=false
+SECRETKEY=""
+TIMEZONE="America/Campo_Grande"
+PATH_LOG="./"
+PROFILE_PIC_API="https://api.dicebear.com/9.x/initials/png?seed="
+
+
+# MERCADO PAGO
+MP_CLIENT_SECRET=""
+MP_BACK_SUCCESS="https://webhook.site/ea8cc690-dea8-4755-8da5-581ee1fc672c"
+MP_BACK_FAILURE="https://webhook.site/ea8cc690-dea8-4755-8da5-581ee1fc672c"
+MP_BACK_PENDING="https://webhook.site/ea8cc690-dea8-4755-8da5-581ee1fc672c"
+
+
+# BANCO DE DADOS TESTE
+DB_TEST_DIALECT="sqlite"
+DATABASE_TEST="bancoTeste.sqlite"
+
+
+# BANCO DE DADOS PROD
+DB_DIALECT="sqlite"
+DATABASE="banco.sqlite"
+
+# DB_DIALECT="postgres"
+# DATABASE="dev_diboaclub"
+DB_HOST=""
+DB_PORT=5432
+DB_USERNAME=""
+DB_PASSWORD=""
+DB_SSL=true
+
+
+# EMAIL
+SEND_EMAILS=true #1 = VERDADEIRO; NADA = FALSO
+EMAIL_SMTP_HOST="smtp.hostinger.com"
+EMAIL_SMTP_PORT=587
+EMAIL_SERVICE=null
+EMAIL_USER=""
+EMAIL_PASS=""
+```
+
+
+<!-- include(controllers/auth/index.apib) -->
+<!-- include(controllers/account/index.apib) -->
+<!-- include(controllers/interactions/index.apib) -->
+<!-- include(controllers/provider/index.apib) -->
+<!-- include(controllers/work/index.apib) -->
+<!-- include(controllers/business/index.apib) -->

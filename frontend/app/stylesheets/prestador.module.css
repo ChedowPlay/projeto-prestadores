@@ -1,0 +1,262 @@
+@font-face {
+  font-family: 'Avenir';
+  src: url('../fonts/AvenirLTStd-Heavy.otf')
+}
+.main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  border-radius: 8px;
+  border: 3px solid #000;
+  justify-content: center;
+  align-items: center;
+}
+
+.separatorNav {
+  height: 20px;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+
+}
+
+.navBar {
+  margin-bottom: 10px;
+  height: 85px;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #ffc466;
+  border-bottom: 3px solid #000;
+  width: 100%;
+  height: 49px;
+  border-radius: 6px 6px 0 0;
+}
+
+.topBar p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.contractButton {
+  width: 60%;
+  font-size: 1rem;
+  font-family: "Avenir";
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.contractButton:hover {
+  cursor: pointer;
+  width: 61%;
+  height: 55px;
+}
+
+.xIcon {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.xIcon:hover {
+  cursor: pointer;
+  width: 35px;
+  height: 35px;
+}
+
+.separator {
+  color: #000;
+  width: 2px;
+  height: 49px;
+  border: solid 1px #000;
+}
+
+.closeIcons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.category {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #000;
+  margin-left: 10px;
+}
+
+.profileImage {
+  border-radius: 100%;
+  margin-bottom: 20px;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.nameContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nameContainer p {
+  margin-right: 10px;
+}
+
+.name {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 10px;
+  font-family: "Avenir";
+}
+
+.name  p {
+  margin-bottom: 0px;
+  padding: 0px;
+}
+
+.heartIcon {
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: fill 0.3s ease-in-out;
+}
+
+.heartIcon:hover {
+  transform: scale(1.2);
+}
+
+.contactContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffc466;
+  padding: 15px;
+  margin-bottom: 20px;
+  width: 95%;
+  border-radius: 16px;
+  border: #000 solid 2px;
+}
+
+.contactContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.contactButton {
+  text-decoration: none;
+  color: #000;
+}
+
+.contactButton:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.jobDescription {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  width: 100%;
+}
+
+.categoryContainer {
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+
+.categoryInfo {
+  background-color: #ffc466;
+  border-radius: 16px;
+  width: fit-content;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+  align-items: center;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.categoryInfo p {
+  margin-bottom: 0px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.descriptionContainer {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.priceTag {
+  display: flex;
+  align-items: center;
+  background-color: #0c7242;
+  border-radius: 16px;
+  width: fit-content;
+  color: #fff;
+  margin-bottom: 0px;
+  padding: 2px 10px 2px 5px;
+}
+
+.dollarSign{
+  margin-right: 5px;
+}
+
+.separador{
+  width: 100%;
+  height: 2px;
+  background-color: #6e6e6e69;
+  margin: 20px 0px;
+}
+
+.gallery {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.gallery h5 {
+  flex-direction: flex-start;
+}
+
+.galleryImage {
+  align-self: center;
+  width: 35%;
+  min-width: 200px;
+  max-width: 280px;
+  height: auto;
+  border-radius: 8px;
+  margin: 1rem;
+}
+
+.reportButton {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  align-self: flex-end;
+  padding: 10px;
+  cursor: pointer;
+}
