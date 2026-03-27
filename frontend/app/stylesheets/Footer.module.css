@@ -1,85 +1,96 @@
 .footer {
-    padding-left: 1rem;
-    padding-right: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background: linear-gradient(180deg, #f8fafc 0%, #eef4ff 100%);
 }
 
-@media (min-width: 768px) {
-    .footer {
-        padding-left: 2rem;
-        padding-right: 2rem;
-    }
+.innerShell {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: 1.75rem;
+  border-radius: 1.8rem;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.08);
 }
 
-.container{
-    padding-top: 10px;
-    min-width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.logoColumn {
-    padding-left: 0.5rem;
-}
-
-.logo {
-    transition: transform 0.3s ease;
-}
-
-.logo:hover {
-    transform: scale(1.05);
-}
-
-.socialIcons {
-    margin-top: 1.5rem;
+.footerText {
+  max-width: 24rem;
+  margin: 1rem 0 0;
+  color: #64748b;
+  line-height: 1.7;
 }
 
 .socialLink {
-    transition: opacity 0.3s ease;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  color: #1d4ed8;
+  background: rgba(37, 99, 235, 0.08);
+  transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
 }
 
 .socialLink:hover {
-    opacity: 0.8;
+  transform: translateY(-2px);
+  background: #1d4ed8;
+  color: #fff;
 }
 
 .navLinks {
-    margin-left: auto;
+  margin-left: auto;
 }
 
 .navLink {
-    font-size: 1.1rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    padding: 0.25rem 0;
-    white-space: nowrap;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  text-decoration: none;
+  transition: color 0.25s ease;
 }
 
 .navLink:hover {
-    color: var(--bs-primary) !important;
+  color: #1d4ed8;
 }
 
 .divider {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 95%;
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
 }
 
 .legalLinks {
-    padding: 0 1rem;
+  padding: 0;
+}
+
+.legalLink,
+.copyright {
+  color: #64748b;
+  font-size: 0.92rem;
 }
 
 .legalLink {
-    text-decoration: none;
-    transition: color 0.3s ease;
-    font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.25s ease;
 }
 
 .legalLink:hover {
-    color: var(--bs-dark) !important;
+  color: #0f172a;
 }
 
-.copyright {
-    font-size: 0.9rem;
+@media (max-width: 768px) {
+  .footer {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .innerShell {
+    padding: 1.35rem;
+    border-radius: 1.4rem;
+  }
 }

@@ -150,7 +150,7 @@ export const StepThree = ({ formData }: StepThreeProps) => {
           <h1>Verifique seu e-mail</h1>
           <h2>
             Enviamos um código para {formData.email}. Por favor, verifique e
-            insira o código abaixo para confirmar seu cadastro no Di Boa Club
+            insira o código abaixo para confirmar seu cadastro no Marca Modelo
           </h2>
         </div>
 

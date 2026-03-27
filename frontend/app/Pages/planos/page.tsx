@@ -144,7 +144,7 @@ export default function PlanosPage() {
           {[
             "Ofereça seus serviços e habilidades",
             "Encontre clientes rapidamente",
-            "De maneira eficiente! Bem Di Boa!",
+            "De maneira eficiente e com apresentação moderna!",
           ].map((item, index) => (
             <li
               key={`benefit-${index}`}

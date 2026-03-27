@@ -59,12 +59,9 @@ export default function Home() {
   const [filteredCards, setFilteredCards] = useState<Card[]>([]);
   const [priceFilter, setPriceFilter] = useState({ min: 10, max: 1000 });
   const [order, setOrder] = useState<"asc" | "desc">("desc");
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [results, setResults] = useState<any[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
-  const [services, setServices] = useState<
-    { service_id: string; label: string; value: number }[]
-  >([]);
+  const [services, setServices] = useState<{ service_id: string; label: string; value: number }[]>([]);
   const API_URL = process.env.API_URL;
 
   useEffect(() => {
@@ -75,7 +72,6 @@ export default function Home() {
     const handleResize = () => {
       setIsTablet(window.innerWidth < 1024);
     };
-    // Verifica se a tela é menor que 1024px (tablet ou celular)
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -92,9 +88,7 @@ export default function Home() {
                 ? item.business.map((b) => b.category)
                 : []
             )
-            .filter(
-              (category): category is string => typeof category === "string"
-            );
+            .filter((category): category is string => typeof category === "string");
 
           const uniqueCategories = [...new Set(allCategories)];
           setCategories(uniqueCategories);
@@ -113,26 +107,25 @@ export default function Home() {
       .catch((err) => console.error("Erro ao buscar serviços:", err));
   }, []);
 
-  // Função para retornar o texto responsivo
   const getResponsiveText = () => {
     if (width < 768) {
       return (
-        <span className="container-fluid d-flex text-center justify-content-center pt-5 pb-2 fs-5 mb-4">
-          Ache o serviço certo e conecte-se com os melhores profissionais
+        <span className="container-fluid d-flex text-center justify-content-center pt-4 pb-2 fs-5 mb-3">
+          Descubra profissionais e navegue por uma demo mais fluida.
         </span>
       );
     } else if (width < 1024) {
       return (
-        <div className="container-fluid text-center justify-content-center pt-5 fs-5">
-          <p>Encontre o serviço ideal!</p>
-          <p>Digite o que precisa e conecte-se aos melhores profissionais.</p>
+        <div className="container-fluid text-center justify-content-center pt-4 fs-5">
+          <p>Explore a Marca Modelo.</p>
+          <p>Busque serviços e visualize uma experiência mais moderna.</p>
         </div>
       );
     }
     return (
       <p>
-        Pesquise facilmente entre nossos serviços! Digite o que precisa na barra
-        de busca abaixo e deixe-nos conectar você aos melhores profissionais.
+        Experimente a demo da Marca Modelo e descubra como a plataforma conecta
+        clientes e profissionais com uma navegação mais leve, clara e objetiva.
       </p>
     );
   };
@@ -141,18 +134,18 @@ export default function Home() {
     <div className="page">
       <NavbarComponent isLogin={false} isLogged={false} />
       <main className={styles.main}>
-        <section id="home" className={styles.section} style={{ marginBottom: "80px" }}>
+        <section id="home" className={`${styles.section} ${styles.sectionReveal}`}>
           <HomeSection />
         </section>
         <section
           id="explorar"
-          className={styles.explorar}
+          className={`${styles.explorar} ${styles.sectionReveal}`}
           style={{
             minHeight: width < 768 ? "auto" : "30vh",
             marginTop: width < 768 ? "20px" : "0",
           }}
         >
-          <div className=" align-items-center text-center margin-top-50">
+          <div className="align-items-center text-center margin-top-50">
             <div className="fs-2 fw-semibold">{getResponsiveText()}</div>
           </div>
           <SearchBar
@@ -174,13 +167,13 @@ export default function Home() {
                 business: [],
               }));
               setFilteredCards(mappedCards);
-            }} />
+            }}
+          />
           <Searched categories={categories} />
         </section>
 
-        {/* Filtros responsivos */}
         {isTablet && (
-          <section>
+          <section className={styles.sectionReveal}>
             <div className="d-flex align-items-center gap-2 ms-2">
               <p className="text-dark mb-1 fs-5">Filtros</p>
               <HiAdjustmentsHorizontal color="black" size={20} />
@@ -192,9 +185,10 @@ export default function Home() {
               <Sortbyprice setFilteredCards={(sorted) => {
                 setFilteredCards(sorted);
               }} />
-              <Location onResultsUpdate={(newResults) => {
-                setFilteredCards(newResults);
-              }}
+              <Location
+                onResultsUpdate={(newResults) => {
+                  setFilteredCards(newResults);
+                }}
                 onClearFilters={() => {
                   setFilteredCards([]);
                 }}
@@ -202,17 +196,10 @@ export default function Home() {
             </div>
           </section>
         )}
-        <section
-          className=" text-white d-flex flex-nowrap"
-          style={{ minHeight: "90vh", background: "#008FBB" }}
-        >
-          <div className="d-flex mx-5 mt-5" style={{ gap: "40px" }}>
-            {/* Filtros no desktop */}
+        <section className={`${styles.resultsSection} ${styles.sectionReveal}`}>
+          <div className={styles.resultsInner}>
             {!isTablet && (
-              <div
-                className="d-flex flex-column gap-3"
-                style={{ width: "350px" }}
-              >
+              <div className={styles.filtersColumn}>
                 <div className="d-flex align-items-center gap-2">
                   <p className="mb-0 fs-5">Filtros</p>
                   <HiAdjustmentsHorizontal color="white" size={22} />
@@ -224,38 +211,31 @@ export default function Home() {
                 <Sortbyprice setFilteredCards={(sorted) => {
                   setFilteredCards(sorted);
                 }} />
-                <Location onResultsUpdate={(newResults) => {
-                  setFilteredCards(newResults);
-                }}
-
+                <Location
+                  onResultsUpdate={(newResults) => {
+                    setFilteredCards(newResults);
+                  }}
                   onClearFilters={() => {
                     setFilteredCards([]);
                   }}
                 />
               </div>
-
             )}
             <div className="flex-grow-1">
-              <OrderPrice
-                onOrderChange={(cardsData) => setFilteredCards(cardsData)}
-              />
+              <OrderPrice onOrderChange={(cardsData) => setFilteredCards(cardsData)} />
               <div className="d-flex">
-                <Cards
-                  searchQuery={searchQuery}
-                  priceFilter={priceFilter}
-                  cardsData={filteredCards}
-                />
+                <Cards searchQuery={searchQuery} priceFilter={priceFilter} cardsData={filteredCards} />
               </div>
             </div>
           </div>
         </section>
-        <section id="precos">
+        <section id="precos" className={styles.sectionReveal}>
           <PlansSection />
         </section>
-        <section id="sobre">
+        <section id="sobre" className={styles.sectionReveal}>
           <AboutSection />
         </section>
-        <section id="faq">
+        <section id="faq" className={styles.sectionReveal}>
           <FAQ />
         </section>
         <Footer />

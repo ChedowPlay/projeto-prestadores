@@ -7,17 +7,14 @@
 @import "./Cards.css";
 @import "./AboutSection.css";
 
-/* COLORS for usage in colors.js */
 .c1 {
-  background-color: #008fbb;
+  background-color: #2563eb;
 }
 
 .c2 {
-  background-color: #ffc466;
+  background-color: #f8b84e;
 }
 
 .white {
   background-color: white;
 }
-
-

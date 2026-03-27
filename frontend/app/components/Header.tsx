@@ -1,39 +1,36 @@
+import BrandMark from "@/app/components/BrandMark";
 import Button from "./Button";
 import COLORS from "../stylesheets/colors";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function Header() {
   const router = useRouter();
+
   return (
     <header className="my-4 container-fluid items-center">
-      <nav className="container-fluid d-flex justify-between items-center col-9 justify-content-center">
-        <div className="flex items-center me-5">
-          <Image
-            src="/images/logo.png"
-            alt="Logo"
-            width={42}
-            height={46}
-            className="me-4"
-          />
-        </div>
+      <nav className="container-fluid d-flex justify-between items-center col-10 justify-content-center gap-4 flex-wrap">
+        <BrandMark onClick={() => router.push("/")} />
 
-        <Link href="/" className="color-primary me-5 align-self-center">
+        <Link href="/" className="color-primary align-self-center text-decoration-none">
           <b>Home</b>
         </Link>
 
-        <b className="align-self-center me-5">Explorar Serviços</b>
-        <b className="align-self-center me-5">Preços e Assinaturas</b>
-        <b className="align-self-center me-5">Sobre o Di Boa</b>
+        <b className="align-self-center">Explorar serviços</b>
+        <b className="align-self-center">Planos demo</b>
+        <b className="align-self-center">Sobre a Marca Modelo</b>
 
-        <div className="ms-2">
+        <div className="ms-2 d-flex flex-wrap gap-2">
           <Link href="/login">
-            <Button text={"Fazer Login"} color={COLORS.secondary} />
+            <Button text={"Fazer login"} color={COLORS.secondary} />
           </Link>
 
           <Link href="/register">
-            <Button text={"Cadastrar"} color={COLORS.white} onClick={()=>router.push("/Pages/cadastrar")} />
+            <Button
+              text={"Cadastrar"}
+              color={COLORS.white}
+              onClick={() => router.push("/Pages/cadastrar")}
+            />
           </Link>
         </div>
       </nav>

@@ -1,3 +1,6 @@
-@import "./custom.scss";
-@import "../node_modules/bootstrap/scss/bootstrap";
-
+:root {
+  --bs-primary: #2563eb;
+  --bs-secondary: #f8b84e;
+  --bs-body-bg: #f8fafc;
+  --bs-body-color: #0f172a;
+}

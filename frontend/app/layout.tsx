@@ -8,8 +8,8 @@ import { getProvider } from "./Pages/loggedArea/actions";
 import { getSessionData } from "./lib/sessions";
 
 export const metadata: Metadata = {
-  title: "Di Boa Club",
-  description: "Encontre os melhores pretadores de serviços da sua região",
+  title: "Marca Modelo",
+  description: "Demo da Marca Modelo com visual mais moderno, simples e fluido para apresentação de serviços.",
 };
 
 export default async function RootLayout({

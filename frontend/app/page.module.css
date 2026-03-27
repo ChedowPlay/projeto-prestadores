@@ -1,17 +1,7 @@
-/* Web
-html {
-    scroll-behavior: smooth;
-}
-  
-body {
-    margin: 0;
-    padding: 0;
-  }
-   */
 #explorar {
-  margin-top: 30px;
+  margin-top: 24px;
   min-height: 30vh;
-  scroll-margin-top: 10px;
+  scroll-margin-top: 100px;
   position: relative;
 }
 
@@ -19,19 +9,79 @@ body {
   padding-bottom: 20px;
 }
 
-
+.main {
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 24%, #f8fbff 100%);
+}
 
 .section:first-of-type {
   scroll-margin-top: 100px;
 }
 
+.sectionReveal {
+  animation: fadeUp 0.7s ease both;
+}
+
+.explorar {
+  width: min(1180px, calc(100% - 2rem));
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.25rem 0 0;
+}
+
 .responsive {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   align-items: flex-start;
   margin-top: 10px;
+}
 
+.resultsSection {
+  min-height: 90vh;
+  margin: 2rem auto 0;
+  width: min(1240px, calc(100% - 2rem));
+  border-radius: 2rem;
+  background: linear-gradient(135deg, #0f172a 0%, #0f4c81 50%, #0ea5e9 100%);
+  color: #fff;
+  box-shadow: 0 26px 60px rgba(15, 23, 42, 0.18);
+}
+
+.resultsInner {
+  display: flex;
+  gap: 2rem;
+  padding: 2.5rem;
+}
+
+.filtersColumn {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .section {
+    min-height: 30vh;
+    scroll-margin-top: 100px;
+  }
+
+  .resultsSection {
+    border-radius: 1.5rem;
+  }
+
+  .resultsInner {
+    padding: 1.5rem;
+  }
 }
 
 @media (max-width: 720px) {
@@ -42,15 +92,6 @@ body {
   }
 }
 
-/* Tablet */
-@media (max-width: 1024px) {
-  .section {
-    min-height: 30vh;
-    scroll-margin-top: 100px;
-  }
-}
-
-/* Mobile */
 @media screen and (max-width: 768px) {
   .section {
     padding: 10px 0;
@@ -58,23 +99,18 @@ body {
     scroll-margin-top: 80px;
   }
 
-  /* Mobile */
-  @media screen and (max-width: 768px) {
-    .section {
-      padding: 10px 0;
-      min-height: 50vh;
-      scroll-margin-top: 80px;
-    }
-
-    #explorar {
-      padding: 20px 0;
-      min-height: auto; /* Ou um valor específico */
-      margin-top: 0;
-    }
+  .explorar {
+    width: calc(100% - 1.25rem);
+    padding: 1rem 0 0;
   }
-  @media screen and (max-width: 517px) {
-    .explorar {
-      margin-top: 100px;
-    }
+
+  .resultsSection {
+    width: calc(100% - 1.25rem);
+    margin-top: 1rem;
+    border-radius: 1.25rem;
+  }
+
+  .resultsInner {
+    padding: 1.25rem 1rem;
   }
 }

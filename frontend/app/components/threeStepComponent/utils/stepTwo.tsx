@@ -69,7 +69,7 @@ export const StepTwo = ({ nextStep }: StepTwoProps) => {
       )}
       <div className={styles.formWrapper}>
         <div className={styles.title}>
-          <h1>Bem vindo ao Di Boa Club</h1>
+          <h1>Bem vindo ao Marca Modelo</h1>
           <h2>Crie sua conta para oferecer os seus serviços</h2>
         </div>
         <form onSubmit={handleSubmit}>

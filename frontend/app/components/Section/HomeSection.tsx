@@ -1,19 +1,24 @@
+import { FiArrowRight, FiCheckCircle, FiPlayCircle } from "react-icons/fi";
+
 import Button from "../Button";
 import COLORS from "@/app/stylesheets/colors";
-import Image from "next/image";
 import React from "react";
-import WindowSize from "@/app/hooks/WindowSize";
 import styles from "@/app/stylesheets/HomeSection.module.css";
 import { useRouter } from "next/navigation";
 
+const highlights = [
+  "Interface mais limpa e intuitiva",
+  "Experiência com navegação fluida",
+  "Apresentação pronta para demonstração",
+];
+
 const HomeSection = () => {
-  const { width } = WindowSize();
   const router = useRouter();
 
   const scrollToSection = (id: string) => {
     const section = document.getElementById(id);
     if (section) {
-      const offset = 80;
+      const offset = 88;
       const sectionPosition =
         section.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top: sectionPosition, behavior: "smooth" });
@@ -21,95 +26,84 @@ const HomeSection = () => {
   };
 
   return (
-    <>
-      <section className={styles.homeSection}>
-        {/* Cachorro */}
-        <div className={styles.dog}>
-          <div className={styles.adjustDog}></div>
-          <Image
-            src="/images/dog.png"
-            alt="dog"
-            className={styles.dog}
-            width={417}
-            height={417}
-          />
-        </div>
+    <section className={styles.homeSection}>
+      <div className={styles.heroCard}>
+        <div className={styles.copyColumn}>
+          <span className={styles.badge}>Marca Modelo • demo</span>
+          <h1 className={styles.title}>
+            Uma experiência mais moderna, simples e pronta para apresentar.
+          </h1>
+          <p className={styles.subTitle}>
+            Reposicionamos o projeto como uma demo com visual mais leve,
+            navegação mais agradável e foco total na descoberta de serviços.
+          </p>
 
-        {/* Texto Desktop e Tablet dentro da seção */}
-        {width >= 700 && (
-          <div className={styles.layoutContainer}>
-            <div className={`${styles.desktopText} text-white`}>
-              <h1 className={styles.Title}>
-                <span className={styles.lineOne}>
-                  Conheça Profissionais Prontos para
-                </span>
-                <span className={styles.lineTwo}>
-                  Atender às suas Demandas!
-                </span>
-              </h1>
-              <p className={styles.subTitle}>
-                Seja qual for a tarefa, nós facilitamos para você.
-              </p>
-            </div>
-
-            <div className={styles.ButtonsLayout}>
-              <Button
-                className={styles.buttons}
-                text="Quero contratar"
-                color={COLORS.secondary}
-                onClick={() => {
-                  scrollToSection("explorar");
-                }}
-              />
-              <Button
-                className={styles.buttons}
-                text="Quero ser contratado"
-                color={COLORS.secondary}
-                onClick={() => {
-                  router.push("/Pages/cadastrar");
-                }}
-              />
-            </div>
-          </div>
-        )}
-      </section>
-
-      {/* Texto para Mobile fora da seção */}
-      {width < 700 && (
-        <div className={styles.mobileContainer}>
-          <div className={`${styles.mobileText} text-center text-dark`}>
-            <h1 className={styles.Title}>
-              Encontre o Profissional Certo
-              <br />
-              <span>em Minutos!</span>
-            </h1>
-            <p className={styles.subTitle}>
-              Conectamos você aos profissionais certos
-              <span> para cada necessidade.</span>
-            </p>
+          <div className={styles.highlightList}>
+            {highlights.map((item) => (
+              <div key={item} className={styles.highlightItem}>
+                <FiCheckCircle size={18} />
+                <span>{item}</span>
+              </div>
+            ))}
           </div>
 
-          <div className={styles.ButtonsLayout}>
+          <div className={styles.buttonsLayout}>
             <Button
-              className={styles.buttons}
-              text="Quero contratar"
+              className={styles.primaryButton}
+              text={
+                <span className={styles.buttonContent}>
+                  Explorar demo <FiArrowRight size={16} />
+                </span>
+              }
               color={COLORS.secondary}
-              onClick={() => {
-                scrollToSection("explorar");
-              }}
+              onClick={() => scrollToSection("explorar")}
             />
             <Button
-              className={styles.buttons}
-              text="Quero ser contratado"
-              color={COLORS.secondary}
-              onClick={() => {
-                router.push("/Pages/cadastrar");
-              }}
+              className={styles.secondaryButton}
+              text="Quero participar"
+              color={COLORS.white}
+              onClick={() => router.push("/Pages/cadastrar")}
             />
           </div>
         </div>
-      )}
-    </>
+
+        <div className={styles.previewColumn}>
+          <div className={styles.previewShell}>
+            <div className={styles.previewHeader}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+
+            <div className={styles.previewHero}>
+              <div>
+                <small>Fluxo principal</small>
+                <strong>Busca, comparação e contato em poucos passos</strong>
+              </div>
+              <div className={styles.previewPlay}>
+                <FiPlayCircle size={22} />
+                <span>demo</span>
+              </div>
+            </div>
+
+            <div className={styles.previewMetrics}>
+              <article>
+                <strong>+ fluidez</strong>
+                <span>transições suaves entre estados e seções</span>
+              </article>
+              <article>
+                <strong>+ clareza</strong>
+                <span>hierarquia visual mais objetiva e moderna</span>
+              </article>
+              <article>
+                <strong>+ foco</strong>
+                <span>chamadas principais priorizadas para conversão</span>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 

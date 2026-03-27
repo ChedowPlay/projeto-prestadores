@@ -1,0 +1,112 @@
+.brandMark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  color: #111827;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.symbol {
+  position: relative;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #0f172a 0%, #2563eb 100%);
+  box-shadow: 0 14px 32px rgba(37, 99, 235, 0.2);
+  overflow: hidden;
+}
+
+.symbol::before,
+.symbol::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.symbol::before {
+  width: 1.8rem;
+  height: 1.8rem;
+  top: -0.35rem;
+  right: -0.15rem;
+}
+
+.symbol::after {
+  width: 1.25rem;
+  height: 1.25rem;
+  left: -0.1rem;
+  bottom: -0.1rem;
+}
+
+.symbolCore {
+  position: absolute;
+  inset: 0.7rem;
+  border-radius: 0.6rem;
+  border: 2px solid rgba(255, 255, 255, 0.96);
+}
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  text-align: left;
+}
+
+.textBlock strong {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.textBlock small {
+  margin-top: 0.25rem;
+  font-size: 0.72rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.7rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.1);
+  color: #2563eb;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.compact .symbol {
+  width: 2.3rem;
+  height: 2.3rem;
+}
+
+.compact .textBlock strong {
+  font-size: 0.95rem;
+}
+
+.compact .textBlock small {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .brandMark {
+    gap: 0.7rem;
+  }
+
+  .badge {
+    font-size: 0.66rem;
+    padding: 0.18rem 0.55rem;
+  }
+}
